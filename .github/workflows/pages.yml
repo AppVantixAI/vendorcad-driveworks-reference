@@ -1,0 +1,66 @@
+name: Deploy GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: GITHUB_PAGES=1 npm run build
+      - name: Prefix root-absolute asset paths for project Pages
+        run: |
+          python3 << 'PY'
+          from pathlib import Path
+          import re
+          out = Path("out")
+          base = "/vendorcad-driveworks-reference"
+          exts = {".html",".js",".css",".txt",".xml",".json",".svg",".map"}
+          for p in out.rglob("*"):
+            if not p.is_file() or p.suffix.lower() not in exts: continue
+            try: text = p.read_text("utf-8")
+            except Exception: continue
+            orig = text
+            def repl_attr(m):
+              attr, q, path = m.group(1), m.group(2), m.group(3)
+              if path.startswith(base) or path.startswith("http") or path.startswith("//") or path.startswith("data:") or path.startswith("#"):
+                return m.group(0)
+              if path.startswith("/"):
+                return f"{attr}={q}{base}{path}{q}"
+              return m.group(0)
+            text = re.sub(r"\b(href|src|srcset|poster|content)=(['\"])(/[^'\"]*)\2", repl_attr, text)
+            def repl_url(m):
+              path=m.group(1)
+              if path.startswith(base) or path.startswith("http") or path.startswith("data:"):
+                return m.group(0)
+              return f"url({base}{path})" if path.startswith("/") else m.group(0)
+            text = re.sub(r"url\((/[^)]+)\)", repl_url, text)
+            text = text.replace("http://localhost:3000", "https://appvantixai.github.io"+base)
+            text = text.replace("http://localhost:3002", "https://appvantixai.github.io"+base)
+            if text != orig: p.write_text(text)
+          PY
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

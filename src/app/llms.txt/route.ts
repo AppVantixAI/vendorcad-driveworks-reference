@@ -1,0 +1,7 @@
+export const dynamic = "force-static";
+
+export function GET() {
+  return new Response("# VendorCAD - CAD product configurator for manufacturers - VendorCAD\n\nConfigure, price, quote (CPQ) custom products and deliver designed-in STEP and exact-spec quotes with VendorCAD. Save time, improve quality and increase sales.\n\nThis is a generated ditto.site clone. It preserves captured page content, metadata, route structure, and static assets where available.\n\n## Routes\n\n- [VendorCAD - CAD product configurator for manufacturers - VendorCAD](https://vendorcad.co.uk/) - Configure, price, quote (CPQ) custom products and deliver designed-in STEP and exact-spec quotes with VendorCAD. Save time, improve quality and increase sales.\n\n## Captured Content\n\n### VendorCAD - CAD product configurator for manufacturers - VendorCAD\nProducts Solutions Why VendorCAD? How to buy Resources About Log in Try live demo Menu Be the supplier who gets designed in first. Your customers configure on your site, see the geometry, download STEP instantly, and keep designing while competitors are still parsing a PDF. See how it works Book a demo Try the real VendorCAD workspace — live demo, instant access, no credit card required. Open live demo See pricing Parametric CAD recipes Rebuild a frozen STEP as a parametric recipe — knobs on the web, geometry that recalculates. How it works Live demo 3D Product Configurator Use guided selling and 3D visualizations to help users configure complex c\n", {
+    headers: { "content-type": "text/plain; charset=utf-8" },
+  });
+}

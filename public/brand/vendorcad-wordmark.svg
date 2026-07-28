@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 40" role="img" aria-label="VendorCAD">
+  <title>VendorCAD wordmark</title>
+  <!-- Mark: isometric wireframe cube -->
+  <g transform="translate(2,4)" fill="none" stroke="#22d3ee" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M16 2 L30 10 L30 26 L16 34 L2 26 L2 10 Z"/>
+    <path d="M16 2 L16 18"/>
+    <path d="M2 10 L16 18 L30 10"/>
+    <path d="M16 18 L16 34"/>
+  </g>
+  <text x="42" y="27" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="-0.03em">
+    <tspan fill="#e8eef4">Vendor</tspan><tspan fill="#22d3ee">CAD</tspan>
+  </text>
+</svg>

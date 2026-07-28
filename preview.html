@@ -1,0 +1,2461 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DriveWorks - SOLIDWORKS® design automation and product configurator software - DriveWorks</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid currentColor; }
+html { -webkit-text-size-adjust: 100%; line-height: normal; }
+body { margin: 0; }
+ul, ol, menu { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea, optgroup { font: inherit; color: inherit; background: transparent; border: 0; padding: 0; margin: 0; text-align: inherit; letter-spacing: inherit; }
+button { cursor: pointer; }
+table { border-collapse: separate; border-spacing: 0; }
+img, picture, video, canvas, svg { display: inline-block; }
+/* Lottie runtime fit: the player re-mounts its svg/canvas into an absolute overlay that fills
+   the host's captured (per-viewport, definite) box. Force that runtime media to fit the box so
+   an aspect-mismatched viewBox (e.g. a portrait animation in a shorter, letterboxed source box)
+   can't inflate past the pinned height. Scoped to the runtime-marked host only. */
+[data-ditto-lottie] > div > svg, [data-ditto-lottie] > div > canvas { width: 100%; height: 100%; display: block; }
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+/* Neutralize UA text defaults to inherit so the generator's default-skipping is
+   correct: a property equal to its inherited value is simply not emitted. */
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+b, strong, th { font-weight: inherit; }
+em, i, cite, var, dfn, address, q { font-style: inherit; }
+small, big, sub, sup { font-size: inherit; }
+sub, sup { vertical-align: inherit; }
+code, kbd, samp, pre, tt, var { font-family: inherit; font-size: inherit; }
+mark { background-color: transparent; color: inherit; }
+abbr[title] { text-decoration: none; }
+fieldset, legend { min-width: 0; }
+
+/* fonts */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-display: fallback;
+  src: url("public/assets/cloned/fonts/426502021d71.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-display: fallback;
+  src: url("public/assets/cloned/fonts/cd62d496fe2e.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-display: fallback;
+  src: url("public/assets/cloned/fonts/d176435e6102.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: url("public/assets/cloned/fonts/2eea303cf2ab.ttf") format("truetype");
+}
+
+/* tokens */
+:root {
+  --background: rgb(255, 255, 255);
+  --foreground: rgb(42, 60, 75);
+  --primary: rgb(50, 74, 92);
+  --accent: rgb(0, 115, 230);
+  --border: rgb(212, 212, 212);
+  --surface: rgb(245, 245, 245);
+  --surface-2: rgb(238, 238, 238);
+  --surface-3: rgba(255, 255, 255, 0.2);
+  --color-001: rgb(29, 42, 59);
+  --color-002: rgb(216, 69, 71);
+  --color-003: rgb(0, 0, 0);
+  --color-004: rgb(19, 40, 61);
+  --color-005: rgb(16, 185, 129);
+  --color-006: rgba(50, 74, 92, 0.9);
+}
+
+:root {
+  /* fonts */
+  --font-body: Roboto;
+  --font-001: "roboto light", sans-serif;
+  --font-002: "microsoft sans serif", sans-serif;
+  --font-003: roboto, sans-serif;
+  /* fontSizes */
+  --font-size-001: 11px;
+  --font-size-002: 13.3333px;
+  --font-size-003: 14px;
+  --font-size-004: 16px;
+  --font-size-005: 20px;
+  --font-size-006: 24px;
+  --font-size-007: 32px;
+  --font-size-008: 48px;
+  /* fontWeights */
+  --font-weight-001: 300;
+  --font-weight-002: 400;
+  --font-weight-003: 500;
+  --font-weight-004: 700;
+  /* lineHeights */
+  --line-height-001: 22.4px;
+  --line-height-002: 19.6px;
+  --line-height-003: 24px;
+  --line-height-004: 28.8px;
+  --line-height-005: 16px;
+  --line-height-006: 28px;
+  --line-height-007: 13.2px;
+  --line-height-008: 33.6px;
+  --line-height-009: 38.4px;
+  --line-height-010: 57.6px;
+  --line-height-011: 19.2px;
+  /* spacing */
+  --space-001: 2px;
+  --space-002: 4px;
+  --space-003: 8px;
+  --space-004: 12px;
+  --space-005: 16px;
+  --space-006: 24px;
+  --space-007: 32px;
+  --space-008: 48px;
+  --space-009: 64px;
+  --space-010: 192px;
+  /* radii */
+  --radius-001: 8px;
+  --radius-002: 24px;
+  --radius-003: 50%;
+  /* shadows */
+  --shadow-001: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+  --shadow-002: rgba(0, 0, 0, 0.25) 0px 1px 4px 0px;
+  /* zIndices */
+  --z-001: 1;
+  /* breakpoints */
+  --bp-375: 375px;
+  --bp-768: 768px;
+  --bp-1280: 1280px;
+  --bp-1920: 1920px;
+}
+
+
+/* page base */
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+html, body { overflow-x: clip; }
+
+/* nodes */
+.cn0{box-sizing:content-box;display:block;color:var(--foreground);font-family:var(--font-body);font-size:var(--font-size-004);font-weight:var(--font-weight-002);font-style:normal;line-height:var(--line-height-001);letter-spacing:normal;word-spacing:0px;text-align:start;text-transform:none;white-space:normal;word-break:normal;overflow-wrap:normal;text-indent:0px;text-shadow:none;font-variant-caps:normal;font-feature-settings:normal;list-style-position:outside;writing-mode:horizontal-tb;direction:ltr;background-color:var(--background)}
+.cn1{box-sizing:content-box;height:5368.05px;min-height:100vh;display:flex;flex-direction:column}
+.cn2{width:100%;height:70px;border-top-width:3px;border-top-style:solid;border-top-color:rgb(207, 29, 57);display:flex;position:sticky;top:0px;left:0px;z-index:50;padding-right:var(--space-005);padding-left:var(--space-005);color:var(--background);background-color:var(--primary);box-shadow:rgba(0, 0, 0, 0.4) 0px 1px 4px 0px}
+.cn3{width:100%;height:67px;display:flex;max-width:1440px;justify-content:space-between;align-items:center;row-gap:var(--space-004);column-gap:var(--space-004);margin-left:auto;margin-right:auto}
+.cn4{width:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;z-index:30;max-width:200px;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn5{width:200px;height:48px;display:block;overflow-x:clip;overflow-y:clip}
+.cn6{height:67px;display:flex;align-self:stretch}
+.cn7{height:67px;display:flex;list-style-type:none;list-style-position:outside}
+.cn8{display:flex}
+.cn9{height:67px;display:flex;padding-right:var(--space-003);padding-left:var(--space-003);align-items:center;cursor:pointer}
+.cn10{border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgba(0, 0, 0, 0);display:block}
+.cn11{display:flex}
+.cn12{height:67px;display:flex;padding-right:var(--space-003);padding-left:var(--space-003);align-items:center;cursor:pointer}
+.cn13{border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgba(0, 0, 0, 0);display:block}
+.cn14{height:67px;display:flex}
+.cn15{height:67px;display:flex;padding-right:var(--space-003);padding-left:var(--space-003);align-items:center;cursor:pointer}
+.cn16{border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgba(0, 0, 0, 0);display:block;white-space:nowrap}
+.cn17{display:flex}
+.cn18{height:67px;display:flex;padding-right:var(--space-003);padding-left:var(--space-003);align-items:center;cursor:pointer}
+.cn19{border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgba(0, 0, 0, 0);display:block;white-space:nowrap}
+.cn20{display:flex}
+.cn21{height:67px;display:flex;padding-right:var(--space-003);padding-left:var(--space-003);align-items:center;cursor:pointer}
+.cn22{border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgba(0, 0, 0, 0);display:block}
+.cn23{display:flex}
+.cn24{height:67px;display:flex;padding-right:var(--space-003);padding-left:var(--space-003);align-items:center;cursor:pointer}
+.cn25{border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgba(0, 0, 0, 0);display:block}
+.cn26{display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;z-index:30;row-gap:var(--space-003);column-gap:var(--space-003)}
+.cn27{border-width:2px;border-style:solid;border-color:var(--surface-3);display:block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);cursor:pointer}
+.cn28{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);background-color:var(--color-002);cursor:pointer}
+.cn29{border-width:2px;border-style:solid;border-color:var(--surface-3);display:none;min-width:0px;padding-top:var(--space-003);padding-right:var(--space-003);padding-bottom:var(--space-003);padding-left:var(--space-004);border-top-left-radius:4.8px;border-top-right-radius:4.8px;border-bottom-right-radius:4.8px;border-bottom-left-radius:4.8px;align-items:center;row-gap:var(--space-004);column-gap:var(--space-004);font-family:Arial;text-align:center;cursor:pointer}
+.cn30{width:auto;height:24px;display:block;min-width:24px;margin-bottom:1.2px;overflow-x:hidden;overflow-y:hidden;font-size:var(--font-size-006);line-height:var(--line-height-008)}
+.cn31{width:24px;height:24px;display:none;min-width:24px;margin-bottom:1.2px;overflow-x:hidden;overflow-y:hidden;font-size:var(--font-size-006);line-height:var(--line-height-008)}
+.cn32{box-sizing:content-box;display:flow-root}
+.cn33{height:503.172px;min-height:320px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:80px;padding-right:var(--space-009);padding-bottom:80px;padding-left:var(--space-009);justify-content:center;align-items:center;overflow-x:clip;overflow-y:clip;background-position:50% 50%}
+.cn34{box-sizing:content-box;width:100%;height:100%;display:block;position:absolute;top:0px;left:0px;min-width:0px;overflow-x:clip;overflow-y:clip;object-fit:cover;object-position:66% 25%;aspect-ratio:auto 1440 / 560}
+.cn35{box-sizing:content-box;height:100%;display:block;position:absolute;top:0px;right:0px;left:0px;opacity:0.9;min-width:0px;background-image:linear-gradient(135deg, rgb(42, 60, 75) 25%, rgba(42, 60, 75, 0.5) 100%)}
+.cn36{box-sizing:content-box;width:100%;height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn37{height:100%;display:flex;max-width:1440px;row-gap:var(--space-005);column-gap:var(--space-008);margin-left:auto;margin-right:auto}
+.cn38{box-sizing:content-box;display:block;min-width:0px;align-self:center;flex-basis:66.66%;word-break:break-word;overflow-wrap:break-word}
+.cn39{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;color:var(--background)}
+.cn40{box-sizing:content-box;display:block;max-width:1600px;font-size:var(--font-size-008);font-weight:var(--font-weight-004);line-height:var(--line-height-010)}
+.cn41{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-size:var(--font-size-005);font-weight:var(--font-weight-001);line-height:var(--line-height-006)}
+.cn42{display:flex;margin-top:var(--space-007);flex-wrap:wrap;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn43{box-sizing:content-box;height:42.3906px;display:block}
+.cn44{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn45{box-sizing:content-box;height:42.3906px;display:block}
+.cn46{border-width:2px;border-style:solid;border-color:var(--background);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;cursor:pointer;white-space:nowrap}
+.cn47{box-sizing:content-box;display:block;min-width:0px;align-self:center;flex-basis:33.33%;word-break:break-word;overflow-wrap:break-word}
+.cn48{box-sizing:content-box;height:240px;min-height:240px;display:block;min-width:320px}
+.cn49{box-sizing:content-box;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn49::before{content:"";display:block;width:368px;height:0px;padding-top:207px}
+.cn50{box-sizing:content-box;width:368px;height:207px;display:block;position:absolute;max-width:100%;overflow-x:clip;overflow-y:clip;background-image:url("public/assets/cloned/images/9322be366b7c.jpg");background-size:100% 100%;background-repeat:no-repeat}
+.cn51{display:flex;padding-top:20px;padding-right:var(--space-009);padding-bottom:20px;padding-left:var(--space-009);flex-wrap:wrap;justify-content:center;align-items:center;row-gap:var(--space-006);column-gap:var(--space-006);background-color:var(--primary)}
+.cn52{box-sizing:content-box;display:block;color:var(--background);font-size:var(--font-size-005);line-height:var(--line-height-006);text-align:center}
+.cn53{height:42.3906px;display:flex;flex-wrap:wrap;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn54{box-sizing:content-box;height:42.3906px;display:block}
+.cn55{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;word-break:break-word;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn56{box-sizing:content-box;height:42.3906px;display:block}
+.cn57{border-width:2px;border-style:solid;border-color:var(--background);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;word-break:break-word;cursor:pointer;white-space:nowrap}
+.cn58{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-009);padding-bottom:var(--space-008);padding-left:var(--space-009);background-color:var(--surface)}
+.cn59{display:flex;max-width:1440px;row-gap:var(--space-005);column-gap:var(--space-005);margin-left:auto;margin-right:auto}
+.cn60{box-sizing:content-box;border-width:1px;border-style:solid;border-color:var(--surface);display:block;min-width:0px;align-self:stretch;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn61{height:100%;display:flex;border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;justify-content:space-between;align-items:stretch;background-color:var(--background);box-shadow:var(--shadow-001)}
+.cn62{display:flex;flex-direction:column;align-items:stretch}
+.cn63{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005)}
+.cn64{box-sizing:content-box;display:block;max-width:1440px;color:var(--primary);font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn65{box-sizing:content-box;display:inline;cursor:pointer}
+.cn66{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn67{height:74.3906px;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);flex-wrap:wrap;justify-content:space-between;align-items:flex-end}
+.cn68{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn69{box-sizing:content-box;height:42.3906px;display:block}
+.cn70{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--primary);cursor:pointer;white-space:nowrap}
+.cn71{box-sizing:content-box;display:block}
+.cn72{border-width:2px;border-style:solid;border-color:var(--foreground);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;cursor:pointer;white-space:nowrap}
+.cn73{box-sizing:content-box;border-width:1px;border-style:solid;border-color:var(--surface);display:block;min-width:0px;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn74{height:100%;display:flex;border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;justify-content:space-between;align-items:stretch;background-color:var(--background);box-shadow:var(--shadow-001)}
+.cn75{display:flex;flex-direction:column;align-items:stretch}
+.cn76{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005)}
+.cn77{box-sizing:content-box;display:block;max-width:1440px;color:var(--primary);font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn78{box-sizing:content-box;display:inline;cursor:pointer}
+.cn79{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn80{height:74.3906px;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);flex-wrap:wrap;justify-content:space-between;align-items:flex-end}
+.cn81{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn82{box-sizing:content-box;height:42.3906px;display:block}
+.cn83{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--primary);cursor:pointer;white-space:nowrap}
+.cn84{box-sizing:content-box;border-width:1px;border-style:solid;border-color:var(--surface);display:block;min-width:0px;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn85{height:100%;display:flex;border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;justify-content:space-between;align-items:stretch;background-color:var(--background);box-shadow:var(--shadow-001)}
+.cn86{display:flex;flex-direction:column;align-items:stretch}
+.cn87{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005)}
+.cn88{box-sizing:content-box;display:block;max-width:1440px;color:var(--primary);font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn89{box-sizing:content-box;display:inline;cursor:pointer}
+.cn90{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn91{height:74.3906px;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);flex-wrap:wrap;justify-content:space-between;align-items:flex-end}
+.cn92{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn93{box-sizing:content-box;height:42.3906px;display:block}
+.cn94{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--primary);cursor:pointer;white-space:nowrap}
+.cn95{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-009);padding-bottom:var(--space-008);padding-left:var(--space-009)}
+.cn96{display:flex;max-width:1440px;row-gap:var(--space-008);column-gap:var(--space-008);margin-left:auto;margin-right:auto}
+.cn97{box-sizing:content-box;display:block;min-width:0px;flex-basis:33.33%;word-break:break-word;overflow-wrap:break-word}
+.cn98{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-bottom:var(--space-005)}
+.cn99{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-007);font-weight:var(--font-weight-003);line-height:var(--line-height-009);text-align:left}
+.cn100{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);margin-bottom:var(--space-004);font-size:var(--font-size-005);font-weight:var(--font-weight-001);line-height:var(--line-height-006);text-align:left}
+.cn101{box-sizing:content-box;height:89.5625px;display:block;max-width:1440px;margin-top:var(--space-004);margin-bottom:var(--space-004);font-weight:var(--font-weight-001)}
+.cn102{box-sizing:content-box;display:inline;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn103{box-sizing:content-box;display:inline;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn104{box-sizing:content-box;display:inline;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn105{box-sizing:content-box;display:inline;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn106{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);margin-bottom:var(--space-004);font-weight:var(--font-weight-001)}
+.cn107{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn108{display:flex;margin-top:var(--space-006);flex-wrap:wrap;justify-content:flex-start;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn109{box-sizing:content-box;height:42.3906px;display:block}
+.cn110{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn111{box-sizing:content-box;height:42.3906px;display:block}
+.cn112{border-width:2px;border-style:solid;border-color:var(--foreground);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;cursor:pointer;white-space:nowrap}
+.cn113{box-sizing:content-box;display:block;min-width:0px;flex-basis:66.66%;word-break:break-word;overflow-wrap:break-word}
+.cn114{display:flex;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn115{box-sizing:content-box;display:block;min-width:0px;align-self:stretch;flex-grow:1;flex-basis:0px}
+.cn116{height:100%;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:stretch;row-gap:var(--space-006);column-gap:var(--space-006);background-color:var(--surface);box-shadow:var(--shadow-001)}
+.cn117{display:flex;flex-direction:column;flex-wrap:wrap;align-items:flex-start;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn118{display:flex;justify-content:flex-start;align-items:center;row-gap:var(--space-003);column-gap:var(--space-003)}
+.cn119{box-sizing:content-box;display:block;font-size:var(--font-size-008);font-weight:var(--font-weight-004);line-height:var(--line-height-010);text-align:center}
+.cn120{box-sizing:content-box;width:40px;height:40px;display:table;clear:both;text-align:center}
+.cn121{width:100%;height:40px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;object-fit:cover;vertical-align:bottom}
+.cn122{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn123{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn124{box-sizing:content-box;height:67.1719px;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn125{box-sizing:content-box;display:inline;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn126{height:42.3906px;display:flex;justify-content:space-between;align-items:flex-end}
+.cn127{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn128{box-sizing:content-box;height:42.3906px;display:block}
+.cn129{border-width:2px;border-style:solid;border-color:var(--foreground);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;cursor:pointer;white-space:nowrap}
+.cn130{box-sizing:content-box;display:block;min-width:0px;align-self:stretch;flex-grow:1;flex-basis:0px}
+.cn131{height:100%;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:stretch;row-gap:var(--space-006);column-gap:var(--space-006);background-color:var(--surface);box-shadow:var(--shadow-001)}
+.cn132{display:flex;flex-direction:column;flex-wrap:wrap;align-items:flex-start;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn133{display:flex;justify-content:flex-start;align-items:center;row-gap:var(--space-003);column-gap:var(--space-003)}
+.cn134{box-sizing:content-box;display:block;font-size:var(--font-size-008);font-weight:var(--font-weight-004);line-height:var(--line-height-010);text-align:center}
+.cn135{box-sizing:content-box;width:40px;height:40px;display:table;clear:both;text-align:center}
+.cn136{width:100%;height:40px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;object-fit:cover;vertical-align:bottom}
+.cn137{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn138{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn139{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn140{height:42.3906px;display:flex;justify-content:space-between;align-items:flex-end}
+.cn141{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn142{box-sizing:content-box;height:42.3906px;display:block}
+.cn143{border-width:2px;border-style:solid;border-color:var(--foreground);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;cursor:pointer;white-space:nowrap}
+.cn144{display:flex;margin-top:var(--space-005);row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn145{box-sizing:content-box;display:block;min-width:0px;align-self:stretch;flex-grow:1;flex-basis:0px}
+.cn146{height:100%;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:stretch;row-gap:var(--space-006);column-gap:var(--space-006);background-color:var(--surface);box-shadow:var(--shadow-001)}
+.cn147{display:flex;flex-direction:column;flex-wrap:wrap;align-items:flex-start;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn148{display:flex;justify-content:flex-start;align-items:center;row-gap:var(--space-003);column-gap:var(--space-003)}
+.cn149{box-sizing:content-box;display:block;font-size:var(--font-size-008);font-weight:var(--font-weight-004);line-height:var(--line-height-010);text-align:center}
+.cn150{box-sizing:content-box;width:40px;height:40px;display:table;clear:both;text-align:center}
+.cn151{width:100%;height:40px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;object-fit:cover;vertical-align:bottom}
+.cn152{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn153{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn154{box-sizing:content-box;height:89.5625px;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn155{box-sizing:content-box;display:inline;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn156{height:42.3906px;display:flex;justify-content:space-between;align-items:flex-end}
+.cn157{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn158{box-sizing:content-box;height:42.3906px;display:block}
+.cn159{border-width:2px;border-style:solid;border-color:var(--foreground);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;cursor:pointer;white-space:nowrap}
+.cn160{box-sizing:content-box;display:block;min-width:0px;align-self:stretch;flex-grow:1;flex-basis:0px}
+.cn161{height:100%;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:stretch;row-gap:var(--space-006);column-gap:var(--space-006);background-color:var(--surface);box-shadow:var(--shadow-001)}
+.cn162{display:flex;flex-direction:column;flex-wrap:wrap;align-items:flex-start;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn163{display:flex;justify-content:flex-start;align-items:center;row-gap:var(--space-003);column-gap:var(--space-003)}
+.cn164{box-sizing:content-box;display:block;font-size:var(--font-size-008);font-weight:var(--font-weight-004);line-height:var(--line-height-010);text-align:center}
+.cn165{box-sizing:content-box;width:40px;height:40px;display:table;clear:both;text-align:center}
+.cn166{width:100%;height:40px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;object-fit:cover;vertical-align:bottom}
+.cn167{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn168{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn169{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn170{height:42.3906px;display:flex;justify-content:space-between;align-items:flex-end}
+.cn171{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn172{box-sizing:content-box;height:42.3906px;display:block}
+.cn173{border-width:2px;border-style:solid;border-color:var(--foreground);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;cursor:pointer;white-space:nowrap}
+.cn174{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-009);padding-bottom:var(--space-008);padding-left:var(--space-009);background-color:var(--surface)}
+.cn175{display:flex;max-width:1440px;row-gap:var(--space-007);column-gap:var(--space-008);margin-left:auto;margin-right:auto}
+.cn176{box-sizing:content-box;display:block;min-width:0px;align-self:center;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn177{box-sizing:content-box;display:block}
+.cn178{box-sizing:content-box;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn178::before{content:"";display:block;width:552px;height:0px;padding-top:310.5px}
+.cn179{box-sizing:content-box;width:552px;height:311px;display:block;position:absolute;max-width:100%;overflow-x:clip;overflow-y:clip;background-image:url("public/assets/cloned/images/9778623b0445.jpg");background-size:100% 100%;background-repeat:no-repeat}
+.cn180{box-sizing:content-box;display:block;min-width:0px;align-self:center;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn181{height:209.562px;display:flex;flex-direction:column;flex-wrap:wrap;justify-content:center;align-items:flex-start;row-gap:var(--space-007);column-gap:var(--space-007)}
+.cn182{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn183{box-sizing:content-box;display:block;max-width:1440px;margin-bottom:var(--space-004);font-size:var(--font-size-006);font-weight:var(--font-weight-001);line-height:var(--line-height-008)}
+.cn184{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-003)}
+.cn185{height:42.3906px;display:flex;flex-wrap:wrap;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn186{box-sizing:content-box;height:42.3906px;display:block}
+.cn187{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn188{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1440px;padding-top:var(--space-008);padding-right:57.5938px;padding-bottom:var(--space-008);padding-left:57.5938px;background-color:var(--surface);margin-left:auto;margin-right:auto}
+.cn189{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:center}
+.cn190{display:flex;max-width:1440px;margin-top:var(--space-007);flex-wrap:wrap;justify-content:center;align-items:center;row-gap:var(--space-008);column-gap:var(--space-008)}
+.cn191{box-sizing:content-box;width:219.5px;height:48px;display:block}
+.cn192{box-sizing:content-box;height:48px;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn193{width:220px;height:48px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 439 / 96;vertical-align:bottom}
+.cn194{box-sizing:content-box;width:68.5px;height:48px;display:block}
+.cn195{box-sizing:content-box;height:48px;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn196{width:69px;height:48px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 137 / 96;vertical-align:bottom}
+.cn197{box-sizing:content-box;width:73.5px;height:48px;display:block}
+.cn198{box-sizing:content-box;height:48px;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn199{width:74px;height:48px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 147 / 96;vertical-align:bottom}
+.cn200{box-sizing:content-box;width:127px;height:48px;display:block}
+.cn201{box-sizing:content-box;height:48px;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn202{width:127px;height:48px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 254 / 96;vertical-align:bottom}
+.cn203{box-sizing:content-box;width:165.5px;height:48px;display:block}
+.cn204{box-sizing:content-box;height:48px;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn205{width:166px;height:48px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 331 / 96;vertical-align:bottom}
+.cn206{height:42.3906px;display:flex;max-width:1440px;flex-wrap:wrap;justify-content:center;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005);margin-left:auto;margin-right:auto}
+.cn207{box-sizing:content-box;height:42.3906px;display:block}
+.cn208{border-width:2px;border-style:solid;border-color:var(--foreground);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;word-break:break-word;cursor:pointer;white-space:nowrap}
+.cn209{height:543.906px;min-height:430px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-009);padding-bottom:var(--space-008);padding-left:var(--space-009);justify-content:center;align-items:center;overflow-x:clip;overflow-y:clip;color:var(--background);background-position:50% 50%}
+.cn210{box-sizing:content-box;width:100%;height:100%;display:block;position:absolute;top:0px;left:0px;min-width:0px;overflow-x:clip;overflow-y:clip;object-fit:cover;aspect-ratio:auto 1440 / 560}
+.cn211{box-sizing:content-box;height:100%;display:block;position:absolute;top:0px;right:0px;left:0px;opacity:0.3;min-width:0px;background-color:var(--color-003)}
+.cn212{box-sizing:content-box;width:100%;height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn213{height:100%;display:flex;max-width:1440px;row-gap:var(--space-008);column-gap:var(--space-007);margin-left:auto;margin-right:auto}
+.cn214{box-sizing:content-box;display:block;min-width:0px;flex-basis:33.33%;word-break:break-word;overflow-wrap:break-word}
+.cn215{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-bottom:var(--space-005)}
+.cn216{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-007);font-weight:var(--font-weight-003);line-height:var(--line-height-009);text-align:left}
+.cn217{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001);text-align:left}
+.cn218{display:flex;margin-top:var(--space-006);flex-wrap:wrap;justify-content:flex-start;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn219{box-sizing:content-box;display:block}
+.cn220{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn221{box-sizing:content-box;display:block;min-width:0px;flex-basis:66.66%;word-break:break-word;overflow-wrap:break-word}
+.cn222{display:flex;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn223{box-sizing:content-box;display:block;min-width:0px;align-self:stretch;flex-grow:1;flex-basis:0px}
+.cn224{height:100%;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:stretch;row-gap:var(--space-005);column-gap:var(--space-005);background-color:var(--color-006);box-shadow:var(--shadow-001)}
+.cn225{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn226{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn227{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn228{height:42.3906px;display:flex;justify-content:space-between;align-items:flex-end}
+.cn229{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn230{box-sizing:content-box;height:42.3906px;display:block}
+.cn231{border-width:2px;border-style:solid;border-color:var(--background);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;cursor:pointer;white-space:nowrap}
+.cn232{box-sizing:content-box;display:block;min-width:0px;align-self:stretch;flex-grow:1;flex-basis:0px}
+.cn233{height:100%;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:stretch;row-gap:var(--space-005);column-gap:var(--space-005);background-color:var(--color-006);box-shadow:var(--shadow-001)}
+.cn234{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn235{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn236{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn237{display:flex;justify-content:space-between;align-items:flex-end}
+.cn238{display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn239{box-sizing:content-box;display:block}
+.cn240{border-width:2px;border-style:solid;border-color:var(--background);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;cursor:pointer}
+.cn241{display:flex;margin-top:var(--space-005);row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn242{box-sizing:content-box;display:block;min-width:0px;align-self:stretch;flex-grow:1;flex-basis:0px}
+.cn243{height:100%;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:stretch;row-gap:var(--space-005);column-gap:var(--space-005);background-color:var(--color-006);box-shadow:var(--shadow-001)}
+.cn244{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn245{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn246{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn247{height:42.3906px;display:flex;justify-content:space-between;align-items:flex-end}
+.cn248{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn249{box-sizing:content-box;height:42.3906px;display:block}
+.cn250{border-width:2px;border-style:solid;border-color:var(--background);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;cursor:pointer;white-space:nowrap}
+.cn251{box-sizing:content-box;display:block;min-width:0px;align-self:stretch;flex-grow:1;flex-basis:0px}
+.cn252{height:100%;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;flex-wrap:wrap;justify-content:space-between;align-items:stretch;row-gap:var(--space-005);column-gap:var(--space-005);background-color:var(--color-006);box-shadow:var(--shadow-001)}
+.cn253{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn254{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn255{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn256{height:42.3906px;display:flex;justify-content:space-between;align-items:flex-end}
+.cn257{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn258{box-sizing:content-box;height:42.3906px;display:block}
+.cn259{border-width:2px;border-style:solid;border-color:var(--background);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;cursor:pointer;white-space:nowrap}
+.cn260{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-009);padding-bottom:var(--space-008);padding-left:var(--space-009)}
+.cn261{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1440px;padding-bottom:var(--space-005);margin-left:auto;margin-right:auto}
+.cn262{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-007);font-weight:var(--font-weight-003);line-height:var(--line-height-009);text-align:center}
+.cn263{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-size:var(--font-size-005);font-weight:var(--font-weight-001);line-height:var(--line-height-006);text-align:center}
+.cn264{box-sizing:content-box;display:inline;font-weight:var(--font-weight-002)}
+.cn265{box-sizing:content-box;height:38.3906px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1440px;margin-top:var(--space-005);overflow-x:hidden;overflow-y:hidden;text-align:center}
+.cn266{height:38.3906px;display:inline-flex;padding-top:var(--space-003);padding-right:var(--space-004);padding-bottom:var(--space-003);padding-left:var(--space-004);border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;row-gap:var(--space-002);column-gap:var(--space-002);color:rgb(127, 29, 29);background-color:rgb(254, 226, 226)}
+.cn267{display:block;background-color:var(--surface)}
+.cn268{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-009);padding-bottom:var(--space-008);padding-left:var(--space-009)}
+.cn269{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1440px;padding-bottom:var(--space-005);margin-left:auto;margin-right:auto}
+.cn270{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-007);font-weight:var(--font-weight-003);line-height:var(--line-height-009);text-align:center}
+.cn271{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-size:var(--font-size-005);font-weight:var(--font-weight-001);line-height:var(--line-height-006);text-align:center}
+.cn272{display:flex;max-width:1440px;margin-top:var(--space-005);row-gap:var(--space-005);column-gap:var(--space-005);margin-left:auto;margin-right:auto}
+.cn273{box-sizing:content-box;display:block;min-width:0px;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn274{height:100%;border-width:1px;border-style:solid;border-color:var(--surface-2);display:flex;border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;justify-content:space-between;align-items:stretch;background-color:var(--background);box-shadow:var(--shadow-001)}
+.cn275{display:flex;flex-direction:column;align-items:stretch}
+.cn276{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-003);padding-right:var(--space-003);padding-left:var(--space-003)}
+.cn277{box-sizing:content-box;width:355.328px;height:199.859px;display:table;clear:both;max-width:1440px;text-align:center}
+.cn278{box-sizing:content-box;height:100%;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn279{width:100%;height:200px;display:inline;max-width:100%;border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);overflow-x:clip;overflow-y:clip;object-fit:contain;aspect-ratio:16 / 9;vertical-align:bottom}
+.cn280{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005)}
+.cn281{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn282{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn283{display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);flex-wrap:wrap;justify-content:space-between;align-items:flex-end}
+.cn284{display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn285{box-sizing:content-box;display:block}
+.cn286{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn287{box-sizing:content-box;display:block}
+.cn288{border-width:2px;border-style:solid;border-color:var(--primary);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--primary);cursor:pointer;white-space:nowrap}
+.cn289{box-sizing:content-box;display:block;min-width:0px;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn290{height:100%;border-width:1px;border-style:solid;border-color:var(--surface-2);display:flex;border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;justify-content:space-between;align-items:stretch;background-color:var(--background);box-shadow:var(--shadow-001)}
+.cn291{display:flex;flex-direction:column;align-items:stretch}
+.cn292{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-003);padding-right:var(--space-003);padding-left:var(--space-003)}
+.cn293{box-sizing:content-box;width:355.328px;height:199.859px;display:table;clear:both;max-width:1440px;text-align:center}
+.cn294{box-sizing:content-box;height:100%;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn295{width:100%;height:200px;display:inline;max-width:100%;border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);overflow-x:clip;overflow-y:clip;object-fit:contain;aspect-ratio:16 / 9;vertical-align:bottom}
+.cn296{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005)}
+.cn297{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn298{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn299{height:74.3906px;display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);flex-wrap:wrap;justify-content:space-between;align-items:flex-end}
+.cn300{height:42.3906px;display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn301{box-sizing:content-box;display:block}
+.cn302{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn303{box-sizing:content-box;height:42.3906px;display:block}
+.cn304{border-width:2px;border-style:solid;border-color:var(--primary);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--primary);cursor:pointer;white-space:nowrap}
+.cn305{box-sizing:content-box;display:block;min-width:0px;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn306{height:100%;border-width:1px;border-style:solid;border-color:var(--surface-2);display:flex;border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);flex-direction:column;justify-content:space-between;align-items:stretch;background-color:var(--background);box-shadow:var(--shadow-001)}
+.cn307{display:flex;flex-direction:column;align-items:stretch}
+.cn308{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-003);padding-right:var(--space-003);padding-left:var(--space-003)}
+.cn309{box-sizing:content-box;width:355.328px;height:199.859px;display:table;clear:both;max-width:1440px;text-align:center}
+.cn310{box-sizing:content-box;height:100%;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn311{width:100%;height:200px;display:inline;max-width:100%;border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);overflow-x:clip;overflow-y:clip;object-fit:cover;aspect-ratio:16 / 9;vertical-align:bottom}
+.cn312{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005)}
+.cn313{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn314{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-weight:var(--font-weight-001)}
+.cn315{display:flex;padding-top:var(--space-005);padding-right:var(--space-005);padding-bottom:var(--space-005);padding-left:var(--space-005);flex-wrap:wrap;justify-content:space-between;align-items:flex-end}
+.cn316{display:flex;flex-wrap:wrap;align-items:flex-end;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn317{box-sizing:content-box;display:block}
+.cn318{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn319{box-sizing:content-box;display:block}
+.cn320{border-width:2px;border-style:solid;border-color:var(--primary);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--primary);cursor:pointer;white-space:nowrap}
+.cn321{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1440px;margin-top:var(--space-005);padding-top:var(--space-007);margin-left:auto;margin-right:auto}
+.cn322{height:42.3906px;display:flex;max-width:1440px;flex-wrap:wrap;justify-content:center;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn323{box-sizing:content-box;height:42.3906px;display:block}
+.cn324{border-width:2px;border-style:solid;border-color:var(--foreground);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;word-break:break-word;cursor:pointer;white-space:nowrap}
+.cn325{height:320px;min-height:320px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-009);padding-bottom:var(--space-008);padding-left:var(--space-009);justify-content:center;align-items:center;overflow-x:clip;overflow-y:clip;color:var(--background);background-position:50% 50%}
+.cn326{box-sizing:content-box;width:100%;height:100%;display:block;position:absolute;top:0px;left:0px;min-width:0px;overflow-x:clip;overflow-y:clip;object-fit:cover;aspect-ratio:auto 1440 / 560}
+.cn327{box-sizing:content-box;height:100%;display:block;position:absolute;top:0px;right:0px;left:0px;opacity:0.9;min-width:0px;background-image:linear-gradient(135deg, rgb(42, 60, 75) 25%, rgba(42, 60, 75, 0.5) 100%)}
+.cn328{box-sizing:content-box;width:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn329{display:flex;max-width:1440px;row-gap:var(--space-005);column-gap:var(--space-008);margin-left:auto;margin-right:auto}
+.cn330{box-sizing:content-box;display:block;min-width:0px;align-self:center;flex-basis:66.66%;word-break:break-word;overflow-wrap:break-word}
+.cn331{display:block}
+.cn332{box-sizing:content-box;display:block;font-size:var(--font-size-007);font-weight:var(--font-weight-003);line-height:var(--line-height-009)}
+.cn333{box-sizing:content-box;display:block;margin-top:var(--space-004);font-size:var(--font-size-005);font-weight:var(--font-weight-001);line-height:var(--line-height-006)}
+.cn334{height:42.3906px;display:flex;margin-top:var(--space-007);flex-wrap:wrap;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn335{box-sizing:content-box;height:42.3906px;display:block}
+.cn336{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn337{box-sizing:content-box;display:block;min-width:0px;align-self:center;flex-basis:33.33%;word-break:break-word;overflow-wrap:break-word}
+.cn338{box-sizing:content-box;display:block}
+.cn339{width:368px;height:197px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 960 / 515;vertical-align:bottom}
+.cn340{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-009);padding-bottom:var(--space-008);padding-left:var(--space-009)}
+.cn341{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1440px;padding-bottom:var(--space-005);margin-left:auto;margin-right:auto}
+.cn342{box-sizing:content-box;display:block;max-width:1440px;font-size:var(--font-size-007);font-weight:var(--font-weight-003);line-height:var(--line-height-009);text-align:center}
+.cn343{box-sizing:content-box;display:block;max-width:1440px;margin-top:var(--space-004);font-size:var(--font-size-005);font-weight:var(--font-weight-001);line-height:var(--line-height-006);text-align:center}
+.cn344{box-sizing:content-box;height:240px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1440px;margin-top:var(--space-005);overflow-x:hidden;overflow-y:hidden;text-align:center}
+.cn345{height:100%;min-height:240px;display:block}
+.cn346{height:100%;display:block;max-width:960px;margin-right:auto;margin-left:auto}
+.cn347{height:240px;min-height:100%;display:grid;position:relative;top:0px;right:0px;bottom:0px;left:0px;grid-template-rows:240px;overflow-x:hidden;overflow-y:hidden;grid-template-columns:minmax(0, 1fr)}
+.cn348{box-sizing:content-box;display:grid;grid-column-start:1;grid-row-start:1;grid-template-columns:minmax(0, 1fr);grid-template-rows:repeat(1, minmax(0, 1fr));aspect-ratio:4}
+.cn349{width:352px;height:24px;display:grid;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-left:120px;align-items:start;grid-template-rows:24px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden;grid-template-columns:minmax(0, 1fr)}
+.cn350{display:block;color:var(--color-001);font-family:var(--font-003);line-height:var(--line-height-011);text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}
+.cn351{width:352px;height:48px;display:grid;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:28px;margin-left:120px;grid-template-rows:48px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden;grid-template-columns:minmax(0, 1fr)}
+.cn352{display:flex;align-items:flex-start;cursor:default}
+.cn353{width:0px;height:0px;display:block;overflow-x:hidden;overflow-y:hidden;color:var(--color-003);font-family:var(--font-002);font-size:var(--font-size-001);line-height:var(--line-height-007);text-align:left;white-space:pre-wrap;overflow-wrap:break-word}
+.cn354{display:block;padding-right:var(--space-002)}
+.cn355{width:100%;height:44px;min-height:16px;border-width:1px;border-style:solid;border-color:var(--border);display:block;padding-top:var(--space-004);padding-right:var(--space-004);padding-bottom:var(--space-004);padding-left:var(--space-004);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);flex-grow:1;flex-basis:0%;overflow-x:clip;overflow-y:clip;color:var(--color-001);font-family:var(--font-001);line-height:var(--line-height-005);text-align:left;background-color:var(--background);cursor:text}
+.cn356{width:352px;height:24px;display:grid;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-left:488px;align-items:start;grid-template-rows:24px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden;grid-template-columns:minmax(0, 1fr)}
+.cn357{display:block;color:var(--color-001);font-family:var(--font-003);line-height:var(--line-height-011);text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}
+.cn358{width:352px;height:48px;display:grid;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:28px;margin-left:488px;grid-template-rows:48px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden;grid-template-columns:minmax(0, 1fr)}
+.cn359{display:flex;align-items:flex-start;cursor:default}
+.cn360{width:0px;height:0px;display:block;overflow-x:hidden;overflow-y:hidden;color:var(--color-003);font-family:var(--font-002);font-size:var(--font-size-001);line-height:var(--line-height-007);text-align:left;white-space:pre-wrap;overflow-wrap:break-word}
+.cn361{display:block;padding-right:var(--space-002)}
+.cn362{width:100%;height:44px;min-height:16px;border-width:1px;border-style:solid;border-color:var(--border);display:block;padding-top:var(--space-004);padding-right:var(--space-004);padding-bottom:var(--space-004);padding-left:var(--space-004);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);flex-grow:1;flex-basis:0%;overflow-x:clip;overflow-y:clip;color:var(--color-001);font-family:var(--font-001);line-height:var(--line-height-005);text-align:left;background-color:var(--background);cursor:text}
+.cn363{width:352px;height:24px;display:grid;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:92px;margin-left:120px;align-items:start;grid-template-rows:24px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden;grid-template-columns:minmax(0, 1fr)}
+.cn364{display:block;color:var(--color-001);font-family:var(--font-003);line-height:var(--line-height-011);text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}
+.cn365{width:352px;height:48px;display:grid;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:120px;margin-left:120px;grid-template-rows:48px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden;grid-template-columns:minmax(0, 1fr)}
+.cn366{display:flex;align-items:flex-start;cursor:default}
+.cn367{width:0px;height:0px;display:block;overflow-x:hidden;overflow-y:hidden;color:var(--color-003);font-family:var(--font-002);font-size:var(--font-size-001);line-height:var(--line-height-007);text-align:left;white-space:pre-wrap;overflow-wrap:break-word}
+.cn368{display:block;padding-right:var(--space-002)}
+.cn369{width:100%;height:44px;min-height:16px;border-width:1px;border-style:solid;border-color:var(--border);display:block;padding-top:var(--space-004);padding-right:var(--space-004);padding-bottom:var(--space-004);padding-left:var(--space-004);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);flex-grow:1;flex-basis:0%;overflow-x:clip;overflow-y:clip;color:var(--color-001);font-family:var(--font-001);line-height:var(--line-height-005);text-align:left;background-color:var(--background);cursor:text}
+.cn370{width:352px;height:24px;display:grid;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:92px;margin-left:488px;align-items:start;grid-template-rows:24px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden;grid-template-columns:minmax(0, 1fr)}
+.cn371{display:block;color:var(--color-001);font-family:var(--font-003);line-height:var(--line-height-011);text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}
+.cn372{width:352px;height:48px;display:grid;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:120px;margin-left:488px;grid-template-rows:48px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden;grid-template-columns:minmax(0, 1fr)}
+.cn373{display:flex;align-items:flex-start;cursor:default}
+.cn374{width:0px;height:0px;display:block;overflow-x:hidden;overflow-y:hidden;color:var(--color-003);font-family:var(--font-002);font-size:var(--font-size-001);line-height:var(--line-height-007);text-align:left;white-space:pre-wrap;overflow-wrap:break-word}
+.cn375{display:block;padding-right:var(--space-002)}
+.cn376{width:100%;height:44px;min-height:16px;border-width:1px;border-style:solid;border-color:var(--border);display:block;padding-top:var(--space-004);padding-right:var(--space-004);padding-bottom:var(--space-004);padding-left:var(--space-004);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);flex-grow:1;flex-basis:0%;overflow-x:clip;overflow-y:clip;color:var(--color-001);font-family:var(--font-001);line-height:var(--line-height-005);text-align:left;background-color:var(--background);cursor:text}
+.cn377{width:591px;height:48px;display:grid;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-010);margin-left:120px;align-items:start;grid-template-rows:48px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden;grid-template-columns:minmax(0, 1fr)}
+.cn378{display:block;color:var(--color-001);font-family:var(--font-001);font-size:var(--font-size-002);line-height:var(--line-height-005);text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}
+.cn379{display:inline}
+.cn380{display:inline;color:var(--accent)}
+.cn381{display:inline}
+.cn382{display:inline;color:var(--accent)}
+.cn383{display:inline}
+.cn384{width:591px;height:48px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-010);margin-left:120px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden}
+.cn385{height:100%;display:flex;color:rgb(0, 0, 255);font-family:var(--font-002);font-size:var(--font-size-001);line-height:var(--line-height-007);text-align:left;text-decoration-line:underline;cursor:pointer}
+.cn386{display:grid;align-items:start;flex-grow:1;flex-basis:0%;overflow-x:hidden;overflow-y:hidden;white-space:pre-wrap;overflow-wrap:anywhere}
+.cn387{width:113px;height:42px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-010);margin-left:727px;grid-column-start:1;grid-row-start:1;overflow-x:hidden;overflow-y:hidden}
+.cn388{height:100%;display:flex}
+.cn389{height:42px;border-width:2px;border-style:solid;border-color:var(--color-005);display:block;padding-top:var(--space-001);padding-right:var(--space-001);padding-bottom:var(--space-001);padding-left:var(--space-001);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);flex-grow:1;flex-basis:0%;overflow-x:hidden;overflow-y:hidden;color:var(--background);font-family:Arial;font-size:var(--font-size-002);line-height:15px;background-color:var(--color-005);cursor:pointer}
+.cn390{display:block;overflow-x:hidden;overflow-y:hidden;font-family:var(--font-003);font-size:var(--font-size-004);line-height:19px;white-space:pre-wrap;overflow-wrap:break-word}
+.cn391{display:block}
+.cn392{display:block}
+.cn393{display:block}
+.cn394{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;background-color:var(--surface)}
+.cn395{display:flex;max-width:1440px;padding-top:var(--space-008);padding-right:var(--space-009);padding-bottom:var(--space-008);padding-left:var(--space-009);justify-content:center;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005);margin-left:auto;margin-right:auto}
+.cn396{box-sizing:content-box;width:72px;height:72px;display:block}
+.cn397{box-sizing:content-box;height:72px;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn398{width:72px;height:72px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 144 / 144;vertical-align:bottom}
+.cn399{box-sizing:content-box;width:72px;height:72px;display:block}
+.cn400{box-sizing:content-box;height:72px;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn401{width:72px;height:72px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 144 / 144;vertical-align:bottom}
+.cn402{box-sizing:content-box;width:72px;height:72px;display:block}
+.cn403{box-sizing:content-box;height:72px;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn404{width:72px;height:72px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 144 / 144;vertical-align:bottom}
+.cn405{box-sizing:content-box;width:72px;height:72px;display:block}
+.cn406{box-sizing:content-box;height:72px;display:inline-block;color:var(--accent);text-decoration-line:underline;cursor:pointer}
+.cn407{width:72px;height:72px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 144 / 144;vertical-align:bottom}
+.cn408{box-sizing:content-box;display:block}
+.cn409{display:flex;padding-top:var(--space-006);padding-bottom:var(--space-006);justify-content:center;align-items:center;color:var(--background);background-color:var(--primary)}
+.cn410{display:flex;flex-basis:400px;row-gap:var(--space-004);column-gap:var(--space-005)}
+.cn411{box-sizing:content-box;display:block;min-width:0px;align-self:center;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn412{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn413{box-sizing:content-box;display:block}
+.cn414{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;text-align:center;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn415{box-sizing:content-box;height:57.5938px;display:block;min-width:0px;align-self:center;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn416{display:block}
+.cn417{height:57.5938px;display:flex;flex-direction:column;align-items:center;row-gap:5px;column-gap:5px;line-height:var(--line-height-004)}
+.cn418{box-sizing:content-box;height:57.5938px;display:block;font-weight:var(--font-weight-001)}
+.cn419{box-sizing:content-box;display:inline;cursor:pointer}
+.cn420{box-sizing:content-box;display:inline}
+.cn421{box-sizing:content-box;display:inline;cursor:pointer}
+.cn422{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-009);padding-bottom:var(--space-008);padding-left:var(--space-009);background-color:var(--surface)}
+.cn423{display:flex;max-width:1440px;row-gap:var(--space-005);column-gap:20px;margin-left:auto;margin-right:auto}
+.cn424{box-sizing:content-box;display:block;min-width:0px;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn425{box-sizing:content-box;display:block;margin-bottom:var(--space-006);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn426{box-sizing:content-box;height:114.375px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;flex-direction:column;flex-wrap:wrap;align-items:flex-start;row-gap:var(--space-004);column-gap:var(--space-004);font-size:var(--font-size-003);line-height:var(--line-height-002)}
+.cn427{box-sizing:content-box;height:114.375px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;flex-direction:column;flex-wrap:wrap;align-items:flex-start;flex-grow:1;row-gap:var(--space-004);column-gap:var(--space-004);list-style-type:none;list-style-position:outside}
+.cn428{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn429{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn430{box-sizing:content-box;display:inline}
+.cn431{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn432{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn433{box-sizing:content-box;display:inline}
+.cn434{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn435{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn436{box-sizing:content-box;display:inline}
+.cn437{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn438{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn439{box-sizing:content-box;display:inline}
+.cn440{box-sizing:content-box;height:257.156px;display:block;min-width:0px;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn441{box-sizing:content-box;display:block;margin-bottom:var(--space-006);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn442{box-sizing:content-box;height:209.156px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;flex-direction:column;flex-wrap:wrap;align-items:flex-start;row-gap:var(--space-004);column-gap:var(--space-004);font-size:var(--font-size-003);line-height:var(--line-height-002)}
+.cn443{box-sizing:content-box;height:209.156px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;flex-direction:column;flex-wrap:wrap;align-items:flex-start;flex-grow:1;row-gap:var(--space-004);column-gap:var(--space-004);list-style-type:none;list-style-position:outside}
+.cn444{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn445{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn446{box-sizing:content-box;display:inline}
+.cn447{box-sizing:content-box;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn448{box-sizing:content-box;display:block;z-index:var(--z-001);cursor:pointer}
+.cn449{box-sizing:content-box;display:inline}
+.cn450{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn451{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn452{box-sizing:content-box;display:inline}
+.cn453{box-sizing:content-box;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn454{box-sizing:content-box;display:block;z-index:var(--z-001);cursor:pointer}
+.cn455{box-sizing:content-box;display:inline}
+.cn456{box-sizing:content-box;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn457{box-sizing:content-box;display:block;z-index:var(--z-001);cursor:pointer}
+.cn458{box-sizing:content-box;display:inline}
+.cn459{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn460{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn461{box-sizing:content-box;display:inline}
+.cn462{box-sizing:content-box;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn463{box-sizing:content-box;display:block;z-index:var(--z-001);cursor:pointer}
+.cn464{box-sizing:content-box;display:inline}
+.cn465{box-sizing:content-box;display:block;min-width:0px;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn466{box-sizing:content-box;display:block;margin-bottom:var(--space-006);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn467{box-sizing:content-box;height:114.375px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;flex-direction:column;flex-wrap:wrap;align-items:flex-start;row-gap:var(--space-004);column-gap:var(--space-004);font-size:var(--font-size-003);line-height:var(--line-height-002)}
+.cn468{box-sizing:content-box;height:114.375px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;flex-direction:column;flex-wrap:wrap;align-items:flex-start;flex-grow:1;row-gap:var(--space-004);column-gap:var(--space-004);list-style-type:none;list-style-position:outside}
+.cn469{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn470{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn471{box-sizing:content-box;display:inline}
+.cn472{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn473{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn474{box-sizing:content-box;display:inline}
+.cn475{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn476{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn477{box-sizing:content-box;display:inline}
+.cn478{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn479{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn480{box-sizing:content-box;display:inline}
+.cn481{box-sizing:content-box;display:block;min-width:0px;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn482{box-sizing:content-box;display:block;margin-bottom:var(--space-006);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn483{box-sizing:content-box;display:block;margin-top:var(--space-004);margin-bottom:var(--space-006);font-size:var(--font-size-003);font-weight:var(--font-weight-001);line-height:21px}
+.cn484{display:flex;flex-wrap:wrap;align-items:center;row-gap:var(--space-004);column-gap:var(--space-004)}
+.cn485{box-sizing:content-box;display:block}
+.cn486{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--color-002);cursor:pointer;white-space:nowrap}
+.cn487{box-sizing:content-box;display:block}
+.cn488{border-width:2px;border-style:solid;border-color:rgba(0, 0, 0, 0);display:inline-block;padding-top:var(--space-003);padding-right:var(--space-005);padding-bottom:var(--space-003);padding-left:var(--space-005);border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);align-content:center;color:var(--background);text-align:center;background-color:var(--primary);cursor:pointer;white-space:nowrap}
+.cn489{box-sizing:content-box;display:block;min-width:0px;flex-grow:1;flex-basis:0px;word-break:break-word;overflow-wrap:break-word}
+.cn490{box-sizing:content-box;display:block;margin-bottom:var(--space-006);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn491{box-sizing:content-box;height:114.375px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;flex-direction:column;flex-wrap:wrap;align-items:flex-start;row-gap:var(--space-004);column-gap:var(--space-004);font-size:var(--font-size-003);line-height:var(--line-height-002)}
+.cn492{box-sizing:content-box;height:114.375px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;flex-direction:column;flex-wrap:wrap;align-items:flex-start;flex-grow:1;row-gap:var(--space-004);column-gap:var(--space-004);list-style-type:none;list-style-position:outside}
+.cn493{box-sizing:content-box;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn494{box-sizing:content-box;display:block;z-index:var(--z-001);cursor:pointer}
+.cn495{box-sizing:content-box;display:inline}
+.cn496{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn497{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);cursor:pointer}
+.cn498{box-sizing:content-box;display:inline}
+.cn499{box-sizing:content-box;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn500{box-sizing:content-box;display:block;z-index:var(--z-001);cursor:pointer}
+.cn501{box-sizing:content-box;display:inline}
+.cn502{box-sizing:content-box;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn503{box-sizing:content-box;display:block;z-index:var(--z-001);cursor:pointer}
+.cn504{box-sizing:content-box;display:inline}
+.cn505{border-top-width:1px;border-top-style:solid;border-top-color:rgb(229, 229, 229);display:flex;padding-top:var(--space-004);padding-right:var(--space-004);padding-bottom:var(--space-004);padding-left:var(--space-004);flex-wrap:wrap;justify-content:center;align-items:center;row-gap:var(--space-004);column-gap:var(--space-004);font-size:var(--font-size-003);line-height:var(--line-height-002);background-color:var(--surface)}
+.cn506{height:19.5938px;display:flex;flex-wrap:wrap;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005)}
+.cn507{box-sizing:content-box;display:block;font-weight:var(--font-weight-001);text-align:left}
+.cn508{box-sizing:content-box;display:block;margin-right:10px;font-weight:var(--font-weight-001);text-align:left}
+.cn509{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;flex-wrap:wrap;align-items:center;row-gap:var(--space-005);column-gap:var(--space-005);font-weight:var(--font-weight-001)}
+.cn510{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;flex-wrap:wrap;justify-content:flex-start;align-items:center;flex-grow:1;row-gap:var(--space-005);column-gap:var(--space-005);list-style-type:none;list-style-position:outside}
+.cn511{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn512{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);text-decoration-line:underline;cursor:pointer}
+.cn513{box-sizing:content-box;display:inline;overflow-wrap:break-word}
+.cn514{box-sizing:content-box;height:19.5938px;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn515{box-sizing:content-box;height:19.5938px;display:block;z-index:var(--z-001);text-decoration-line:underline;cursor:pointer}
+.cn516{box-sizing:content-box;display:inline;overflow-wrap:break-word}
+.cn517{box-sizing:content-box;display:flex;position:relative;top:0px;right:0px;bottom:0px;left:0px;align-items:center}
+.cn518{box-sizing:content-box;display:block;z-index:var(--z-001);text-decoration-line:underline;cursor:pointer}
+.cn519{box-sizing:content-box;display:inline;overflow-wrap:break-word}
+.cn520{box-sizing:content-box;width:40px;height:232px;display:flex;position:fixed;right:0px;bottom:0px;z-index:10;margin-top:var(--space-005);margin-right:var(--space-005);margin-bottom:var(--space-005);margin-left:var(--space-005);flex-direction:column;row-gap:var(--space-003);column-gap:var(--space-003)}
+.cn521{box-sizing:content-box;height:24px;display:block;padding-top:var(--space-003);padding-right:var(--space-003);padding-bottom:var(--space-003);padding-left:var(--space-003);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);color:var(--background);text-decoration-line:underline;background-color:var(--color-004);box-shadow:var(--shadow-002);cursor:pointer}
+.cn522{box-sizing:content-box;width:auto;height:24px;display:block;min-width:24px;overflow-x:hidden;overflow-y:hidden;font-size:var(--font-size-006);line-height:var(--line-height-008)}
+.cn523{box-sizing:content-box;height:24px;display:block;padding-top:var(--space-003);padding-right:var(--space-003);padding-bottom:var(--space-003);padding-left:var(--space-003);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);color:var(--background);text-decoration-line:underline;background-color:var(--color-004);box-shadow:var(--shadow-002);cursor:pointer}
+.cn524{box-sizing:content-box;width:auto;height:24px;display:block;min-width:24px;overflow-x:hidden;overflow-y:hidden;font-size:var(--font-size-006);line-height:var(--line-height-008)}
+.cn525{box-sizing:content-box;height:24px;display:block;padding-top:var(--space-003);padding-right:var(--space-003);padding-bottom:var(--space-003);padding-left:var(--space-003);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);color:var(--background);text-decoration-line:underline;background-color:var(--color-004);box-shadow:var(--shadow-002);cursor:pointer}
+.cn526{box-sizing:content-box;width:auto;height:24px;display:block;min-width:24px;overflow-x:hidden;overflow-y:hidden;font-size:var(--font-size-006);line-height:var(--line-height-008)}
+.cn527{box-sizing:content-box;height:24px;display:block;padding-top:var(--space-003);padding-right:var(--space-003);padding-bottom:var(--space-003);padding-left:var(--space-003);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);color:var(--background);text-decoration-line:underline;background-color:var(--color-004);box-shadow:var(--shadow-002);cursor:pointer}
+.cn528{box-sizing:content-box;width:auto;height:24px;display:block;min-width:24px;overflow-x:hidden;overflow-y:hidden;font-size:var(--font-size-006);line-height:var(--line-height-008)}
+.cn529{box-sizing:content-box;height:24px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-003);padding-right:var(--space-003);padding-bottom:var(--space-003);padding-left:var(--space-003);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);overflow-x:hidden;overflow-y:hidden;color:var(--background);text-decoration-line:underline;background-color:var(--color-004);box-shadow:var(--shadow-002);cursor:pointer}
+.cn529::before{content:"";display:block;position:absolute;top:0px;right:0px;bottom:0px;left:0px;width:40px;height:40px;background-image:linear-gradient(225deg, rgb(185, 0, 179), rgb(244, 0, 1));opacity:0;border-top-left-radius:var(--radius-003)}
+.cn530{box-sizing:content-box;width:auto;height:24px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;min-width:24px;overflow-x:hidden;overflow-y:hidden;font-size:var(--font-size-006);line-height:var(--line-height-008)}
+.cn531{box-sizing:content-box;width:1px;height:1px;border-width:2px;border-style:inset;border-color:var(--foreground);display:block;position:absolute;top:-9999px;overflow-x:clip;overflow-y:clip}
+
+@media (max-width: 571px) {
+.cn1{height:10934.3px}
+.cn2{padding-right:var(--space-004);padding-left:var(--space-004)}
+.cn4{max-width:160px}
+.cn5{width:160px;height:38px}
+.cn6{display:none}
+.cn26{display:none}
+.cn29{height:45.1875px;display:flex;min-width:0}
+.cn33{height:790.344px;padding-right:18.75px;padding-left:18.75px}
+.cn37{flex-wrap:wrap}
+.cn38{flex-grow:1;flex-basis:100%}
+.cn47{display:none}
+.cn49::before{padding-top:56.25%;width:auto;height:auto}
+.cn51{padding-right:18.75px;padding-left:18.75px}
+.cn58{padding-right:18.75px;padding-left:18.75px}
+.cn59{flex-wrap:wrap}
+.cn60{flex-basis:100%}
+.cn73{flex-basis:100%}
+.cn84{flex-basis:100%}
+.cn95{padding-right:18.75px;padding-left:18.75px}
+.cn96{flex-wrap:wrap}
+.cn97{flex-grow:1;flex-basis:100%}
+.cn101{height:111.953px}
+.cn113{flex-grow:1;flex-basis:100%}
+.cn114{flex-wrap:wrap}
+.cn115{flex-basis:100%}
+.cn124{height:89.5625px}
+.cn130{flex-basis:100%}
+.cn144{flex-wrap:wrap}
+.cn145{flex-basis:100%}
+.cn160{flex-basis:100%}
+.cn174{padding-right:18.75px;padding-left:18.75px}
+.cn175{flex-wrap:wrap}
+.cn176{flex-basis:100%}
+.cn178::before{width:337.5px;padding-top:189.844px}
+.cn179{width:338px;height:190px;background-size:initial;background-repeat:initial}
+.cn180{flex-basis:100%}
+.cn181{height:265.547px}
+.cn188{padding-right:16.875px;padding-left:16.875px}
+.cn209{height:1345.33px;padding-right:18.75px;padding-left:18.75px}
+.cn213{flex-wrap:wrap}
+.cn214{flex-grow:1;flex-basis:100%}
+.cn221{flex-grow:1;flex-basis:100%}
+.cn222{flex-wrap:wrap}
+.cn223{flex-basis:100%}
+.cn232{flex-basis:100%}
+.cn241{flex-wrap:wrap}
+.cn242{flex-basis:100%}
+.cn251{flex-basis:100%}
+.cn260{padding-right:18.75px;padding-left:18.75px}
+.cn268{padding-right:18.75px;padding-left:18.75px}
+.cn272{flex-wrap:wrap}
+.cn273{flex-basis:100%}
+.cn277{width:319.5px;height:179.719px}
+.cn279{height:180px}
+.cn289{flex-basis:100%}
+.cn293{width:319.5px;height:179.719px}
+.cn295{height:180px}
+.cn305{flex-basis:100%}
+.cn309{width:319.5px;height:179.719px}
+.cn311{height:180px}
+.cn325{height:371.172px;padding-right:18.75px;padding-left:18.75px}
+.cn329{flex-wrap:wrap}
+.cn330{flex-grow:1;flex-basis:100%}
+.cn337{display:none}
+.cn340{padding-right:18.75px;padding-left:18.75px}
+.cn344{height:530px}
+.cn347{height:530px;grid-template-rows:530px}
+.cn348{aspect-ratio:0.637}
+.cn349{width:337px;margin-left:0}
+.cn351{width:337px;margin-left:0}
+.cn356{width:337px;margin-top:92px;margin-left:0}
+.cn358{width:337px;margin-top:120px;margin-left:0}
+.cn363{width:337px;margin-top:184px;margin-left:0}
+.cn365{width:337px;margin-top:212px;margin-left:0}
+.cn370{width:337px;margin-top:276px;margin-left:0}
+.cn372{width:337px;margin-top:304px;margin-left:0}
+.cn377{width:337px;height:96px;margin-top:376px;grid-template-rows:96px;margin-left:0}
+.cn384{width:337px;height:96px;margin-top:376px;margin-left:0}
+.cn387{margin-top:488px;margin-left:0}
+.cn395{padding-right:18.75px;padding-left:18.75px}
+.cn410{flex-wrap:wrap}
+.cn411{flex-basis:100%}
+.cn415{flex-basis:100%}
+.cn422{padding-right:18.75px;padding-left:18.75px}
+.cn423{flex-wrap:wrap}
+.cn424{flex-basis:100%}
+.cn440{flex-basis:100%}
+.cn465{flex-basis:100%}
+.cn481{flex-basis:100%}
+.cn489{flex-basis:100%}
+.cn520{display:none}
+.cn529::before{width:100%;height:100%;right:auto;bottom:auto}
+}
+
+@media (min-width: 572px) and (max-width: 1024px) {
+.cn1{height:9853.19px}
+.cn2{padding-right:var(--space-004);padding-left:var(--space-004)}
+.cn4{max-width:160px}
+.cn5{width:160px;height:38px}
+.cn6{display:none}
+.cn26{display:none}
+.cn29{height:45.1875px;display:flex;min-width:0}
+.cn33{padding-right:38.3906px;padding-left:38.3906px}
+.cn37{flex-wrap:wrap}
+.cn38{flex-grow:1;flex-basis:100%}
+.cn47{display:none}
+.cn49::before{padding-top:56.25%;width:auto;height:auto}
+.cn51{padding-right:38.3906px;padding-left:38.3906px}
+.cn58{padding-right:38.3906px;padding-left:38.3906px}
+.cn59{flex-wrap:wrap}
+.cn60{flex-basis:100%}
+.cn73{flex-basis:100%}
+.cn84{flex-basis:100%}
+.cn95{padding-right:38.3906px;padding-left:38.3906px}
+.cn96{flex-wrap:wrap}
+.cn97{flex-grow:1;flex-basis:100%}
+.cn101{height:44.7812px}
+.cn113{flex-grow:1;flex-basis:100%}
+.cn114{flex-wrap:wrap}
+.cn115{flex-basis:100%}
+.cn124{height:44.7812px}
+.cn130{flex-basis:100%}
+.cn144{flex-wrap:wrap}
+.cn145{flex-basis:100%}
+.cn154{height:44.7812px}
+.cn160{flex-basis:100%}
+.cn174{padding-right:38.3906px;padding-left:38.3906px}
+.cn175{flex-wrap:wrap}
+.cn176{flex-basis:100%}
+.cn178::before{width:691.219px;padding-top:388.797px}
+.cn179{width:691px;height:389px;background-size:initial;background-repeat:initial}
+.cn180{flex-basis:100%}
+.cn181{height:175.969px}
+.cn188{padding-right:34.5469px;padding-left:34.5469px}
+.cn209{height:1054.25px;padding-right:38.3906px;padding-left:38.3906px}
+.cn213{flex-wrap:wrap}
+.cn214{flex-grow:1;flex-basis:100%}
+.cn221{flex-grow:1;flex-basis:100%}
+.cn222{flex-wrap:wrap}
+.cn223{flex-basis:100%}
+.cn232{flex-basis:100%}
+.cn241{flex-wrap:wrap}
+.cn242{flex-basis:100%}
+.cn251{flex-basis:100%}
+.cn260{padding-right:38.3906px;padding-left:38.3906px}
+.cn268{padding-right:38.3906px;padding-left:38.3906px}
+.cn272{flex-wrap:wrap}
+.cn273{flex-basis:100%}
+.cn277{width:673.219px;height:378.672px}
+.cn279{height:379px}
+.cn289{flex-basis:100%}
+.cn293{width:673.219px;height:378.672px}
+.cn295{height:379px}
+.cn305{flex-basis:100%}
+.cn309{width:673.219px;height:378.672px}
+.cn311{height:379px}
+.cn325{padding-right:38.3906px;padding-left:38.3906px}
+.cn329{flex-wrap:wrap}
+.cn330{flex-grow:1;flex-basis:100%}
+.cn337{display:none}
+.cn340{padding-right:38.3906px;padding-left:38.3906px}
+.cn344{height:482px}
+.cn347{height:482px;grid-template-rows:482px}
+.cn348{aspect-ratio:1.434}
+.cn349{width:691px;margin-left:0}
+.cn351{width:691px;margin-left:0}
+.cn356{width:691px;margin-top:92px;margin-left:0}
+.cn358{width:691px;margin-top:120px;margin-left:0}
+.cn363{width:691px;margin-top:184px;margin-left:0}
+.cn365{width:691px;margin-top:212px;margin-left:0}
+.cn370{width:691px;margin-top:276px;margin-left:0}
+.cn372{width:691px;margin-top:304px;margin-left:0}
+.cn377{width:691px;margin-top:376px;margin-left:0}
+.cn384{width:691px;margin-top:376px;margin-left:0}
+.cn387{margin-top:440px;margin-left:0}
+.cn395{padding-right:38.3906px;padding-left:38.3906px}
+.cn410{flex-wrap:wrap}
+.cn411{flex-basis:100%}
+.cn415{flex-basis:100%}
+.cn422{padding-right:38.3906px;padding-left:38.3906px}
+.cn423{flex-wrap:wrap}
+.cn424{flex-basis:100%}
+.cn440{flex-basis:100%}
+.cn465{flex-basis:100%}
+.cn481{flex-basis:100%}
+.cn489{flex-basis:100%}
+.cn520{display:none}
+.cn529::before{width:100%;height:100%;right:auto;bottom:auto}
+}
+
+@media (min-width: 1601px) {
+.cn1{height:5259.5px}
+.cn33{height:421px;padding-right:96px;padding-left:96px}
+.cn48{height:261px}
+.cn49::before{width:464px;padding-top:261px}
+.cn50{width:464px;height:261px}
+.cn51{padding-right:96px;padding-left:96px}
+.cn58{padding-right:96px;padding-left:96px}
+.cn95{padding-right:96px;padding-left:96px}
+.cn101{height:67.1719px}
+.cn154{height:67.1719px}
+.cn174{padding-right:96px;padding-left:96px}
+.cn178::before{width:696px;padding-top:391.5px}
+.cn179{width:696px;height:392px}
+.cn181{height:175.969px}
+.cn188{padding-right:86.3906px;padding-left:86.3906px}
+.cn209{height:521.516px;padding-right:96px;padding-left:96px}
+.cn260{padding-right:96px;padding-left:96px}
+.cn265{margin-right:144px;margin-left:144px}
+.cn268{padding-right:96px;padding-left:96px}
+.cn277{width:451.328px;height:253.859px}
+.cn279{height:254px}
+.cn293{width:451.328px;height:253.859px}
+.cn295{height:254px}
+.cn309{width:451.328px;height:253.859px}
+.cn311{height:254px}
+.cn325{height:344.906px;padding-right:96px;padding-left:96px}
+.cn339{width:464px;height:249px}
+.cn340{padding-right:96px;padding-left:96px}
+.cn344{margin-right:144px;margin-left:144px}
+.cn395{padding-right:96px;padding-left:96px}
+.cn422{padding-right:96px;padding-left:96px}
+}
+
+</style>
+</head>
+<body class="cn0" data-cid="n0">
+     
+    <div class="cn1" data-cid="n1">
+      <header class="cn2" data-cid="n2">
+        <div class="cn3" data-cid="n3">
+          <a class="cn4" data-cid="n4" href="https://www.driveworks.co.uk/" title="Home">
+             
+            <img class="cn5" data-cid="n5" alt="DriveWorks - Configure &amp; Automate" src="public/assets/cloned/svg/dc1cea92902d.svg" />
+             
+          </a>
+           
+          <nav class="cn6" data-cid="n6">
+            <ul class="cn7" data-cid="n7">
+              <li class="cn8" data-cid="n8">
+                <a class="cn9" data-cid="n9" href="https://www.driveworks.co.uk/products/">
+                   
+                  <span class="cn10" data-cid="n10">
+                    Products
+                  </span>
+                   
+                </a>
+                 
+              </li>
+              <li class="cn11" data-cid="n11">
+                <a class="cn12" data-cid="n12" href="https://www.driveworks.co.uk/solutions/">
+                   
+                  <span class="cn13" data-cid="n13">
+                    Solutions
+                  </span>
+                   
+                </a>
+                 
+              </li>
+              <li class="cn14" data-cid="n14">
+                <a class="cn15" data-cid="n15" href="https://www.driveworks.co.uk/why-driveworks/">
+                   
+                  <span class="cn16" data-cid="n16">
+                    Why DriveWorks?
+                  </span>
+                   
+                </a>
+                 
+              </li>
+              <li class="cn17" data-cid="n17">
+                <a class="cn18" data-cid="n18" href="https://www.driveworks.co.uk/how-to-buy/">
+                   
+                  <span class="cn19" data-cid="n19">
+                    How to buy
+                  </span>
+                   
+                </a>
+                 
+              </li>
+              <li class="cn20" data-cid="n20">
+                <a class="cn21" data-cid="n21" href="https://www.driveworks.co.uk/resources/">
+                   
+                  <span class="cn22" data-cid="n22">
+                    Resources
+                  </span>
+                   
+                </a>
+                 
+              </li>
+              <li class="cn23" data-cid="n23">
+                <a class="cn24" data-cid="n24" href="https://www.driveworks.co.uk/about/">
+                   
+                  <span class="cn25" data-cid="n25">
+                    About
+                  </span>
+                   
+                </a>
+                 
+              </li>
+            </ul>
+             
+          </nav>
+           
+          <div class="cn26" data-cid="n26">
+            <a class="cn27" data-cid="n27" href="https://my.driveworks.co.uk/login/" target="_blank">
+               Log in 
+            </a>
+             
+            <a class="cn28" data-cid="n28" href="https://driveworkslive.com/" target="_blank">
+               Try demos 
+            </a>
+             
+          </div>
+           
+          <button class="cn29" data-cid="n29">
+             Menu 
+            <svg class="cn30" data-cid="n30" viewBox="0 0 24 24" fill="currentColor">
+                <path fill="none" stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+            </svg>
+             
+            <svg class="cn31" data-cid="n31" viewBox="0 0 24 24" fill="currentColor">
+                <path fill="none" stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+             
+          </button>
+           
+        </div>
+         
+      </header>
+       
+      <div class="cn32" data-cid="n32">
+        <div class="cn33" data-cid="n33">
+          <img class="cn34" data-cid="n34" alt="" height="560" sizes="(max-width: 1440px) 100vw, 1440px" src="public/assets/cloned/images/5d241a5f32a5.jpg" srcset="public/assets/cloned/images/5d241a5f32a5.jpg 1440w, public/assets/cloned/images/899f10d4fa8d.jpg 300w, public/assets/cloned/images/415b5f0bc7ec.jpg 1024w, public/assets/cloned/images/9a17ec70f7df.jpg 768w" width="1440" />
+          <span class="cn35" data-cid="n35" aria-hidden="true"></span>
+          <div class="cn36" data-cid="n36">
+            <div class="cn37" data-cid="n37">
+              <div class="cn38" data-cid="n38">
+                <div class="cn39" data-cid="n39">
+                  <h1 class="cn40" data-cid="n40" id="h-configure-design-sell-and-manufacture-custom-products-faster">
+                    Configure, design, sell, and manufacture custom products faster
+                  </h1>
+                   
+                  <p class="cn41" data-cid="n41">
+                    DriveWorks technology enables you to accurately configure custom products, calculate pricing, and automatically create documents and data for sales and manufacturing.
+                  </p>
+                   
+                </div>
+                 
+                <div class="cn42" data-cid="n42">
+                  <div class="cn43" data-cid="n43">
+                    <a class="cn44" data-cid="n44" href="https://www.driveworks.co.uk/solutions/industries/" rel="01905462-bf39-70e1-9000-ff45314cc484">
+                      Explore industry solutions
+                    </a>
+                  </div>
+                   
+                  <div class="cn45" data-cid="n45">
+                    <a class="cn46" data-cid="n46" href="https://www.driveworks.co.uk/request-demo/" rel="01905462-dcac-7b96-aa8d-6e0f6ccfbdfb">
+                      Request a demo
+                    </a>
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+              <div class="cn47" data-cid="n47">
+                <figure class="cn48" data-cid="n48">
+                  <div class="cn49" data-cid="n49">
+                    <iframe class="cn50" data-cid="n50" height="281" title="What makes DriveWorks software so scalable and easy to use?" width="500"></iframe>
+                     
+                  </div>
+                </figure>
+                 
+              </div>
+               
+            </div>
+             
+          </div>
+        </div>
+         
+        <div class="cn51" data-cid="n51">
+          <p class="cn52" data-cid="n52">
+            Try DriveWorks Solo free for 30 days, instant access, and no credit card required.
+          </p>
+           
+          <div class="cn53" data-cid="n53">
+            <div class="cn54" data-cid="n54">
+              <a class="cn55" data-cid="n55" href="#start-trial" rel="01905462-bf39-70e1-9000-ff45314cc484">
+                Start free trial
+              </a>
+            </div>
+             
+            <div class="cn56" data-cid="n56">
+              <a class="cn57" data-cid="n57" href="https://www.driveworks.co.uk/products/driveworkssolo/roi/" rel="01905462-dcac-7b96-aa8d-6e0f6ccfbdfb">
+                Calculate ROI
+              </a>
+            </div>
+             
+          </div>
+           
+        </div>
+         
+        <div class="cn58" data-cid="n58">
+          <div class="cn59" data-cid="n59">
+            <div class="cn60" data-cid="n60">
+              <div class="cn61" data-cid="n61">
+                <div class="cn62" data-cid="n62">
+                  <div class="cn63" data-cid="n63">
+                    <h3 class="cn64" data-cid="n64" id="h-automate-solidworks">
+                      <a class="cn65" data-cid="n65" href="https://www.driveworks.co.uk/solutions/design-automation/">
+                        Automate SOLIDWORKS®
+                      </a>
+                    </h3>
+                     
+                    <p class="cn66" data-cid="n66">
+                      Automatically create order-specific SOLIDWORKS® parts, assemblies, and drawings.
+                    </p>
+                     
+                  </div>
+                   
+                </div>
+                 
+                <div class="cn67" data-cid="n67">
+                  <div class="cn68" data-cid="n68">
+                    <div class="cn69" data-cid="n69">
+                      <a class="cn70" data-cid="n70" href="https://www.driveworks.co.uk/solutions/design-automation/" rel="01905463-3101-75f8-a671-594cc08d2def">
+                        Design Automation
+                      </a>
+                    </div>
+                     
+                    <div class="cn71" data-cid="n71">
+                      <a class="cn72" data-cid="n72" href="https://www.driveworks.co.uk/free-trial/" rel="01905463-4f1e-70c3-94de-740e3f70b530">
+                        Free trial
+                      </a>
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+            <div class="cn73" data-cid="n73">
+              <div class="cn74" data-cid="n74">
+                <div class="cn75" data-cid="n75">
+                  <div class="cn76" data-cid="n76">
+                    <h3 class="cn77" data-cid="n77" id="h-3d-product-configurator">
+                      <a class="cn78" data-cid="n78" href="https://www.driveworks.co.uk/solutions/sales-configurator/">
+                        3D Product Configurator
+                      </a>
+                    </h3>
+                     
+                    <p class="cn79" data-cid="n79">
+                      Use guided selling and 3D visualizations to help users configure complex custom products accurately.
+                    </p>
+                     
+                  </div>
+                   
+                </div>
+                 
+                <div class="cn80" data-cid="n80">
+                  <div class="cn81" data-cid="n81">
+                    <div class="cn82" data-cid="n82">
+                      <a class="cn83" data-cid="n83" href="https://www.driveworks.co.uk/solutions/product-configurator/" rel="01905463-693e-7435-81f0-f90d5e3b5e09">
+                        Product Configurator
+                      </a>
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+            <div class="cn84" data-cid="n84">
+              <div class="cn85" data-cid="n85">
+                <div class="cn86" data-cid="n86">
+                  <div class="cn87" data-cid="n87">
+                    <h3 class="cn88" data-cid="n88" id="h-configure-price-quote-cpq">
+                      <a class="cn89" data-cid="n89" href="https://www.driveworks.co.uk/solutions/cpq-for-manufacturing/">
+                        Configure, Price, Quote (CPQ)
+                      </a>
+                    </h3>
+                     
+                    <p class="cn90" data-cid="n90">
+                      Configure, price, and quote complex custom products on any device, anywhere.
+                    </p>
+                     
+                  </div>
+                   
+                </div>
+                 
+                <div class="cn91" data-cid="n91">
+                  <div class="cn92" data-cid="n92">
+                    <div class="cn93" data-cid="n93">
+                      <a class="cn94" data-cid="n94" href="https://www.driveworks.co.uk/solutions/cpq-for-manufacturing/" rel="01905463-84d2-7a80-96dc-4faa2adb6bdd">
+                        CPQ for Manufacturing
+                      </a>
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+          </div>
+           
+        </div>
+         
+        <div class="cn95" data-cid="n95">
+          <div class="cn96" data-cid="n96">
+            <div class="cn97" data-cid="n97">
+              <div class="cn98" data-cid="n98">
+                <h2 class="cn99" data-cid="n99" id="h-same-but-different-products">
+                  Same but different products?
+                </h2>
+                 
+                <p class="cn100" data-cid="n100">
+                  Reduce repetitive tasks, eliminate errors, increase sales, and deliver custom products in record time.
+                </p>
+                 
+                <p class="cn101" data-cid="n101">
+                  DriveWorks software provides manufacturing companies with the 
+                  <a class="cn102" data-cid="n102" href="https://www.driveworks.co.uk/technology/">
+                    tools and technology
+                  </a>
+                   to build their own 
+                  <a class="cn103" data-cid="n103" href="https://www.driveworks.co.uk/solutions/design-automation/">
+                    design automation
+                  </a>
+                  , 
+                  <a class="cn104" data-cid="n104" href="https://www.driveworks.co.uk/solutions/product-configurator/">
+                    3D product configurator
+                  </a>
+                   and 
+                  <a class="cn105" data-cid="n105" href="https://www.driveworks.co.uk/solutions/cpq-for-manufacturing/">
+                    CPQ for manufacturing
+                  </a>
+                   solution.
+                </p>
+                 
+                <p class="cn106" data-cid="n106">
+                  DriveWorks captures and centralizes the decisions, information, experience, and product constraints teams use to configure products manually. This captured knowledge is then used to calculate values, make decisions, perform actions, and automatically create order-specific sales documents and SOLIDWORKS® manufacturing data.
+                </p>
+                 
+                <p class="cn107" data-cid="n107">
+                  Sales, engineering, and manufacturing are seamlessly linked with a shared source of truth, removing the challenges of delivering complex custom products for all teams.
+                </p>
+                 
+              </div>
+               
+              <div class="cn108" data-cid="n108">
+                <div class="cn109" data-cid="n109">
+                  <a class="cn110" data-cid="n110" href="https://www.driveworks.co.uk/customer-stories/">
+                    Customer stories
+                  </a>
+                </div>
+                 
+                <div class="cn111" data-cid="n111">
+                  <a class="cn112" data-cid="n112" href="https://www.driveworks.co.uk/request-demo/">
+                    Get a demo of DriveWorks
+                  </a>
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+            <div class="cn113" data-cid="n113">
+              <div class="cn114" data-cid="n114">
+                <div class="cn115" data-cid="n115">
+                  <div class="cn116" data-cid="n116">
+                    <div class="cn117" data-cid="n117">
+                      <div class="cn118" data-cid="n118">
+                        <h3 class="cn119" data-cid="n119" id="h-100">
+                          100%
+                        </h3>
+                         
+                        <figure class="cn120" data-cid="n120">
+                          <img class="cn121" data-cid="n121" alt="" src="public/assets/cloned/svg/a6d4f15c99fb.svg" />
+                        </figure>
+                         
+                      </div>
+                       
+                      <div class="cn122" data-cid="n122">
+                        <h3 class="cn123" data-cid="n123" id="h-reduction-in-design-errors">
+                          Reduction in design errors
+                        </h3>
+                         
+                        <p class="cn124" data-cid="n124">
+                          <a class="cn125" data-cid="n125" href="https://www.driveworks.co.uk/solutions/design-automation/">
+                            Automation
+                          </a>
+                           is consistently accurate and significantly quicker than manually preparing files, reliably outputting predictable results.
+                        </p>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                    <div class="cn126" data-cid="n126">
+                      <div class="cn127" data-cid="n127">
+                        <div class="cn128" data-cid="n128">
+                          <a class="cn129" data-cid="n129" href="https://www.driveworks.co.uk/solutions/design-automation/" rel="01905464-2f54-72ce-a522-9db6b57be5b0">
+                            Explore design automation
+                          </a>
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+                <div class="cn130" data-cid="n130">
+                  <div class="cn131" data-cid="n131">
+                    <div class="cn132" data-cid="n132">
+                      <div class="cn133" data-cid="n133">
+                        <h3 class="cn134" data-cid="n134" id="h-87">
+                          87%
+                        </h3>
+                         
+                        <figure class="cn135" data-cid="n135">
+                          <img class="cn136" data-cid="n136" alt="" src="public/assets/cloned/svg/d12c43a2be42.svg" />
+                        </figure>
+                         
+                      </div>
+                       
+                      <div class="cn137" data-cid="n137">
+                        <h3 class="cn138" data-cid="n138" id="h-faster-quote-to-manufacture">
+                          Faster quote to manufacture
+                        </h3>
+                         
+                        <p class="cn139" data-cid="n139">
+                          Remove bottlenecks and accelerate your sales cycle by seamlessly linking customers, sales, engineering and manufacturing.
+                        </p>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                    <div class="cn140" data-cid="n140">
+                      <div class="cn141" data-cid="n141">
+                        <div class="cn142" data-cid="n142">
+                          <a class="cn143" data-cid="n143" href="https://www.driveworks.co.uk/solutions/cpq-for-manufacturing/" rel="01905463-bc96-71ea-a636-0d3ea876c8b1">
+                            Discover CPQ for manufacturing
+                          </a>
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+              <div class="cn144" data-cid="n144">
+                <div class="cn145" data-cid="n145">
+                  <div class="cn146" data-cid="n146">
+                    <div class="cn147" data-cid="n147">
+                      <div class="cn148" data-cid="n148">
+                        <h3 class="cn149" data-cid="n149" id="h-75">
+                          75%
+                        </h3>
+                         
+                        <figure class="cn150" data-cid="n150">
+                          <img class="cn151" data-cid="n151" alt="" src="public/assets/cloned/svg/d12c43a2be42.svg" />
+                        </figure>
+                         
+                      </div>
+                       
+                      <div class="cn152" data-cid="n152">
+                        <h3 class="cn153" data-cid="n153" id="h-faster-employee-onboarding">
+                          Faster employee onboarding
+                        </h3>
+                         
+                        <p class="cn154" data-cid="n154">
+                          <a class="cn155" data-cid="n155" href="https://www.driveworks.co.uk/articles/guided-selling-complex-configurable-products/">
+                            Guided selling
+                          </a>
+                           empowers salespeople to accurately configure complex products, even when they don’t have extensive product knowledge.
+                        </p>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                    <div class="cn156" data-cid="n156">
+                      <div class="cn157" data-cid="n157">
+                        <div class="cn158" data-cid="n158">
+                          <a class="cn159" data-cid="n159" href="https://www.driveworks.co.uk/articles/guided-selling-complex-configurable-products/" rel="01905464-137f-7422-8ec7-b5c1837fcca6">
+                            Lean how guided selling can help
+                          </a>
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+                <div class="cn160" data-cid="n160">
+                  <div class="cn161" data-cid="n161">
+                    <div class="cn162" data-cid="n162">
+                      <div class="cn163" data-cid="n163">
+                        <h3 class="cn164" data-cid="n164" id="h-235">
+                          235%
+                        </h3>
+                         
+                        <figure class="cn165" data-cid="n165">
+                          <img class="cn166" data-cid="n166" alt="" src="public/assets/cloned/svg/d12c43a2be42.svg" />
+                        </figure>
+                         
+                      </div>
+                       
+                      <div class="cn167" data-cid="n167">
+                        <h3 class="cn168" data-cid="n168" id="h-throughput-capacity-increase">
+                          Throughput capacity increase
+                        </h3>
+                         
+                        <p class="cn169" data-cid="n169">
+                          Automated and optimized processes expand capacity, so you can focus on doing more of what matters most.
+                        </p>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                    <div class="cn170" data-cid="n170">
+                      <div class="cn171" data-cid="n171">
+                        <div class="cn172" data-cid="n172">
+                          <a class="cn173" data-cid="n173" href="https://www.driveworks.co.uk/blog/ps-doors-triple-throughput-provide-custom-drawings-quickly-using-driveworks/" rel="01905463-f780-7c95-8a2e-f5308db4512b">
+                            Learn how PS Doors use DriveWorks
+                          </a>
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+          </div>
+           
+        </div>
+         
+        <div class="cn174" data-cid="n174">
+          <div class="cn175" data-cid="n175">
+            <div class="cn176" data-cid="n176">
+              <figure class="cn177" data-cid="n177">
+                <div class="cn178" data-cid="n178">
+                  <iframe class="cn179" data-cid="n179" height="281" title="Erhardt Markisen - DriveWorks Customer Stories" width="500"></iframe>
+                   
+                </div>
+              </figure>
+               
+            </div>
+             
+            <div class="cn180" data-cid="n180">
+              <div class="cn181" data-cid="n181">
+                <div class="cn182" data-cid="n182">
+                  <p class="cn183" data-cid="n183">
+                    “It’s a huge advantage if you can manage design, configuration, automation, and sales in one application”
+                  </p>
+                   
+                  <p class="cn184" data-cid="n184">
+                    Thorsten Winkelmann, Area Sales Manager at ERHARDT Markisenbau GmbH
+                  </p>
+                   
+                </div>
+                 
+                <div class="cn185" data-cid="n185">
+                  <div class="cn186" data-cid="n186">
+                    <a class="cn187" data-cid="n187" href="https://www.driveworks.co.uk/customer-stories/erhardt-markisenbau/" rel="01905464-57dc-731a-ac3c-0a986facf3e6">
+                      Read customer story
+                    </a>
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+          </div>
+           
+          <div class="cn188" data-cid="n188">
+            <h2 class="cn189" data-cid="n189" id="h-driveworks-is-trusted-by-manufacturers-large-and-small-around-the-world">
+              DriveWorks is trusted by manufacturers large and small around the world.
+            </h2>
+             
+            <div class="cn190" data-cid="n190">
+              <figure class="cn191" data-cid="n191">
+                <a class="cn192" data-cid="n192" href="https://www.driveworks.co.uk/customer-stories/weather-guard/">
+                  <img class="cn193" data-cid="n193" alt="" height="96" src="public/assets/cloned/images/df9d7c35ab41.png" width="439" />
+                </a>
+              </figure>
+               
+              <figure class="cn194" data-cid="n194">
+                <a class="cn195" data-cid="n195" href="https://www.driveworks.co.uk/customer-stories/weg/">
+                  <img class="cn196" data-cid="n196" alt="" height="96" src="public/assets/cloned/images/3fa08ebd2d10.png" width="137" />
+                </a>
+              </figure>
+               
+              <figure class="cn197" data-cid="n197">
+                <a class="cn198" data-cid="n198" href="https://www.driveworks.co.uk/customer-stories/rose-systemtechnik/">
+                  <img class="cn199" data-cid="n199" alt="" height="96" src="public/assets/cloned/images/b7d34cab517d.png" width="147" />
+                </a>
+              </figure>
+               
+              <figure class="cn200" data-cid="n200">
+                <a class="cn201" data-cid="n201" href="https://www.driveworks.co.uk/customer-stories/extronics/">
+                  <img class="cn202" data-cid="n202" alt="" height="96" src="public/assets/cloned/images/6aa23ea7b8e0.png" width="254" />
+                </a>
+              </figure>
+               
+              <figure class="cn203" data-cid="n203">
+                <a class="cn204" data-cid="n204" href="https://www.driveworks.co.uk/customer-stories/rademaker/">
+                  <img class="cn205" data-cid="n205" alt="" height="96" src="public/assets/cloned/images/38bcb89ccab9.png" width="331" />
+                </a>
+              </figure>
+               
+            </div>
+             
+          </div>
+           
+          <div class="cn206" data-cid="n206">
+            <div class="cn207" data-cid="n207">
+              <a class="cn208" data-cid="n208" href="https://www.driveworks.co.uk/customer-stories/" rel="01905464-7663-72be-a177-81aa9abbda96">
+                View all customer stories
+              </a>
+            </div>
+             
+          </div>
+           
+        </div>
+         
+        <div class="cn209" data-cid="n209">
+          <img class="cn210" data-cid="n210" alt="" height="560" sizes="auto, (max-width: 1440px) 100vw, 1440px" src="public/assets/cloned/images/ea12d6bfa78f.jpg" srcset="public/assets/cloned/images/ea12d6bfa78f.jpg 1440w, public/assets/cloned/images/e8890d2cf8cf.jpg 300w, public/assets/cloned/images/0f4f2a54f2b2.jpg 1024w, public/assets/cloned/images/847e24cc6816.jpg 768w" width="1440" />
+          <span class="cn211" data-cid="n211" aria-hidden="true"></span>
+          <div class="cn212" data-cid="n212">
+            <div class="cn213" data-cid="n213">
+              <div class="cn214" data-cid="n214">
+                <div class="cn215" data-cid="n215">
+                  <h2 class="cn216" data-cid="n216" id="h-features-amp-benefits">
+                    Features &amp; benefits
+                  </h2>
+                   
+                  <p class="cn217" data-cid="n217">
+                    DriveWorks configurator software is the ultimate choice in SOLIDWORKS® design automation and 3D CPQ for manufacturing.
+                  </p>
+                   
+                </div>
+                 
+                <div class="cn218" data-cid="n218">
+                  <div class="cn219" data-cid="n219">
+                    <a class="cn220" data-cid="n220" href="https://www.driveworks.co.uk/solutions/" rel="018f715c-7b1b-721f-898c-f36f8aa7a776">
+                      Solutions
+                    </a>
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+              <div class="cn221" data-cid="n221">
+                <div class="cn222" data-cid="n222">
+                  <div class="cn223" data-cid="n223">
+                    <div class="cn224" data-cid="n224">
+                      <div class="cn225" data-cid="n225">
+                        <h3 class="cn226" data-cid="n226" id="h-boost-quality">
+                          Boost quality
+                        </h3>
+                         
+                        <p class="cn227" data-cid="n227">
+                          DriveWorks product configurators are based on rules, calculations and logic, improving the quality of outputs, reducing costly errors and strengthening your reputation.
+                        </p>
+                         
+                      </div>
+                       
+                      <div class="cn228" data-cid="n228">
+                        <div class="cn229" data-cid="n229">
+                          <div class="cn230" data-cid="n230">
+                            <a class="cn231" data-cid="n231" href="https://www.driveworks.co.uk/technology/rules/" rel="01905463-bc96-71ea-a636-0d3ea876c8b1">
+                              Explore rules technology
+                            </a>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                  <div class="cn232" data-cid="n232">
+                    <div class="cn233" data-cid="n233">
+                      <div class="cn234" data-cid="n234">
+                        <h3 class="cn235" data-cid="n235" id="h-respond-faster-sell-more">
+                          Respond faster, sell more
+                        </h3>
+                         
+                        <p class="cn236" data-cid="n236">
+                          Impress your customers and win more orders by responding quicker than your competitors. Automatically generate accurate quotes, engineering drawings, and manufacturing data.
+                        </p>
+                         
+                      </div>
+                       
+                      <div class="cn237" data-cid="n237">
+                        <div class="cn238" data-cid="n238">
+                          <div class="cn239" data-cid="n239">
+                            <a class="cn240" data-cid="n240" href="https://www.driveworks.co.uk/technology/solidworks-automation/" rel="01905463-f780-7c95-8a2e-f5308db4512b">
+                              Explore design automation technology
+                            </a>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+                <div class="cn241" data-cid="n241">
+                  <div class="cn242" data-cid="n242">
+                    <div class="cn243" data-cid="n243">
+                      <div class="cn244" data-cid="n244">
+                        <h3 class="cn245" data-cid="n245" id="h-any-device-anywhere">
+                          Any device, anywhere
+                        </h3>
+                         
+                        <p class="cn246" data-cid="n246">
+                          Enable customers, sales teams, and distributors to configure, price, and quote on any device, anywhere. Communicate design details with interactive 3D visualizations.
+                        </p>
+                         
+                      </div>
+                       
+                      <div class="cn247" data-cid="n247">
+                        <div class="cn248" data-cid="n248">
+                          <div class="cn249" data-cid="n249">
+                            <a class="cn250" data-cid="n250" href="https://www.driveworks.co.uk/technology/form-designer/" rel="01905464-137f-7422-8ec7-b5c1837fcca6">
+                              Explore forms technology
+                            </a>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                  <div class="cn251" data-cid="n251">
+                    <div class="cn252" data-cid="n252">
+                      <div class="cn253" data-cid="n253">
+                        <h3 class="cn254" data-cid="n254" id="h-faster-implementation">
+                          Faster implementation
+                        </h3>
+                         
+                        <p class="cn255" data-cid="n255">
+                          Your team knows your products best. DriveWorks configurators are easy to set up in-house with no programming skills or consultants required.
+                        </p>
+                         
+                      </div>
+                       
+                      <div class="cn256" data-cid="n256">
+                        <div class="cn257" data-cid="n257">
+                          <div class="cn258" data-cid="n258">
+                            <a class="cn259" data-cid="n259" href="https://www.driveworks.co.uk/technology/" rel="01905464-2f54-72ce-a522-9db6b57be5b0">
+                              Explore DriveWorks technology
+                            </a>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+          </div>
+        </div>
+         
+        <div class="cn260" data-cid="n260" id="start-trial">
+          <div class="cn261" data-cid="n261">
+            <h2 class="cn262" data-cid="n262" id="h-try-driveworks-for-free">
+              Try DriveWorks for free
+            </h2>
+             
+            <p class="cn263" data-cid="n263">
+              Get instant access to DriveWorks Solo for 30 days, 
+              <strong class="cn264" data-cid="n264">
+                no credit card required
+              </strong>
+              .
+            </p>
+             
+          </div>
+           
+          <div class="cn265" data-cid="n265">
+            <div class="cn266" data-cid="n266">
+               There has been a problem. 
+            </div>
+             
+          </div>
+           
+        </div>
+         
+        <div class="cn267" data-cid="n267">
+          <div class="cn268" data-cid="n268">
+            <div class="cn269" data-cid="n269">
+              <h2 class="cn270" data-cid="n270" id="h-software">
+                Software
+              </h2>
+               
+              <p class="cn271" data-cid="n271">
+                SOLIDWORKS® design automation and product configurator software.
+              </p>
+               
+            </div>
+             
+            <div class="cn272" data-cid="n272">
+              <div class="cn273" data-cid="n273">
+                <div class="cn274" data-cid="n274">
+                  <div class="cn275" data-cid="n275">
+                    <div class="cn276" data-cid="n276">
+                      <figure class="cn277" data-cid="n277">
+                        <a class="cn278" data-cid="n278" href="https://www.driveworks.co.uk/products/driveworksxpress/">
+                          <img class="cn279" data-cid="n279" alt="" height="540" sizes="auto, (max-width: 960px) 100vw, 960px" src="public/assets/cloned/images/40c3d4ebdeaf.png" srcset="public/assets/cloned/images/40c3d4ebdeaf.png 960w, public/assets/cloned/images/0ba517198ccc.png 300w, public/assets/cloned/images/2b3ebcec081f.png 768w" width="960" />
+                        </a>
+                      </figure>
+                       
+                    </div>
+                     
+                    <div class="cn280" data-cid="n280">
+                      <h3 class="cn281" data-cid="n281" id="h-driveworksxpress">
+                        DriveWorksXpress
+                      </h3>
+                       
+                      <p class="cn282" data-cid="n282">
+                        DriveWorksXpress entry-level design automation is included free in every seat of SOLIDWORKS®. Upscale to DriveWorks Solo or DriveWorks Pro anytime.
+                      </p>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                  <div class="cn283" data-cid="n283">
+                    <div class="cn284" data-cid="n284">
+                      <div class="cn285" data-cid="n285">
+                        <a class="cn286" data-cid="n286" href="https://driveworks.co.uk/products/driveworksxpress/" rel="018f7161-9e65-7d88-a59d-db46ef96a346">
+                          Learn more
+                        </a>
+                      </div>
+                       
+                      <div class="cn287" data-cid="n287">
+                        <a class="cn288" data-cid="n288" href="https://driveworks.co.uk/products/driveworksxpress/#activate" rel="018f7161-c631-76e7-8223-80c3bd651a7f">
+                          Activate
+                        </a>
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+              <div class="cn289" data-cid="n289">
+                <div class="cn290" data-cid="n290">
+                  <div class="cn291" data-cid="n291">
+                    <div class="cn292" data-cid="n292">
+                      <figure class="cn293" data-cid="n293">
+                        <a class="cn294" data-cid="n294" href="https://www.driveworks.co.uk/products/driveworkssolo/">
+                          <img class="cn295" data-cid="n295" alt="" height="540" sizes="auto, (max-width: 960px) 100vw, 960px" src="public/assets/cloned/images/ace7c9e4be37.png" srcset="public/assets/cloned/images/ace7c9e4be37.png 960w, public/assets/cloned/images/7de831d8670e.png 300w, public/assets/cloned/images/d2d66c7dea91.png 768w" width="960" />
+                        </a>
+                      </figure>
+                       
+                    </div>
+                     
+                    <div class="cn296" data-cid="n296">
+                      <h3 class="cn297" data-cid="n297" id="h-driveworks-solo">
+                        DriveWorks Solo
+                      </h3>
+                       
+                      <p class="cn298" data-cid="n298">
+                        Powerful SOLIDWORKS® design automation. Download your 30-day free trial of DriveWorks Solo.
+                      </p>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                  <div class="cn299" data-cid="n299">
+                    <div class="cn300" data-cid="n300">
+                      <div class="cn301" data-cid="n301">
+                        <a class="cn302" data-cid="n302" href="https://driveworks.co.uk/products/driveworkssolo/" rel="018f7161-f0f5-7248-8648-46269f29f01a">
+                          Learn more
+                        </a>
+                      </div>
+                       
+                      <div class="cn303" data-cid="n303">
+                        <a class="cn304" data-cid="n304" href="https://www.driveworks.co.uk/free-trial/" rel="018f7162-107e-7310-990d-9c80bbfff5de">
+                          Start free trial
+                        </a>
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+              <div class="cn305" data-cid="n305">
+                <div class="cn306" data-cid="n306">
+                  <div class="cn307" data-cid="n307">
+                    <div class="cn308" data-cid="n308">
+                      <figure class="cn309" data-cid="n309">
+                        <a class="cn310" data-cid="n310" href="https://www.driveworks.co.uk/products/driveworkspro/">
+                          <img class="cn311" data-cid="n311" alt="" height="540" sizes="auto, (max-width: 960px) 100vw, 960px" src="public/assets/cloned/images/f91c8a018994.png" srcset="public/assets/cloned/images/f91c8a018994.png 960w, public/assets/cloned/images/7664caa24324.png 300w, public/assets/cloned/images/25db8b8ec5da.png 768w" width="960" />
+                        </a>
+                      </figure>
+                       
+                    </div>
+                     
+                    <div class="cn312" data-cid="n312">
+                      <h3 class="cn313" data-cid="n313" id="h-driveworks-pro">
+                        DriveWorks Pro
+                      </h3>
+                       
+                      <p class="cn314" data-cid="n314">
+                        Complete SOLIDWORKS® automation and online 3D CPQ configurator software. Try one of our configurator examples now.
+                      </p>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                  <div class="cn315" data-cid="n315">
+                    <div class="cn316" data-cid="n316">
+                      <div class="cn317" data-cid="n317">
+                        <a class="cn318" data-cid="n318" href="https://driveworks.co.uk/products/driveworkspro/" rel="018f7162-320b-7cda-afb7-3643d8f7076e">
+                          Learn more
+                        </a>
+                      </div>
+                       
+                      <div class="cn319" data-cid="n319">
+                        <a class="cn320" data-cid="n320" href="https://driveworkslive.com/#examples" rel="018f7162-55c1-74b1-b7f2-ab6e4ca240c2">
+                          Try examples
+                        </a>
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+            <div class="cn321" data-cid="n321">
+              <div class="cn322" data-cid="n322">
+                <div class="cn323" data-cid="n323">
+                  <a class="cn324" data-cid="n324" href="https://driveworks.co.uk/products/compare/" rel="018f7162-8bf3-7898-af79-88b032302048">
+                    Compare software
+                  </a>
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+          </div>
+           
+        </div>
+         
+        <div class="cn325" data-cid="n325">
+          <img class="cn326" data-cid="n326" alt="" height="560" sizes="auto, (max-width: 1440px) 100vw, 1440px" src="public/assets/cloned/images/04ead56dc80d.jpg" srcset="public/assets/cloned/images/04ead56dc80d.jpg 1440w, public/assets/cloned/images/4afa529290f6.jpg 300w, public/assets/cloned/images/e7291da1d971.jpg 1024w, public/assets/cloned/images/55e98ef2c87c.jpg 768w" width="1440" />
+          <span class="cn327" data-cid="n327" aria-hidden="true"></span>
+          <div class="cn328" data-cid="n328">
+            <div class="cn329" data-cid="n329">
+              <div class="cn330" data-cid="n330">
+                <div class="cn331" data-cid="n331">
+                  <h2 class="cn332" data-cid="n332" id="h-buy-driveworks-software">
+                    Buy DriveWorks software
+                  </h2>
+                   
+                  <p class="cn333" data-cid="n333">
+                    DriveWorks is sold worldwide and supported locally by authorized and certified DriveWorks resellers, in your time zone.
+                  </p>
+                   
+                </div>
+                 
+                <div class="cn334" data-cid="n334">
+                  <div class="cn335" data-cid="n335">
+                    <a class="cn336" data-cid="n336" href="https://www.driveworks.co.uk/resellers/" rel="01905464-9bb6-7691-8c86-f9b5a14d8494">
+                      Find a reseller
+                    </a>
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+              <div class="cn337" data-cid="n337">
+                <figure class="cn338" data-cid="n338">
+                  <img class="cn339" data-cid="n339" alt="" height="515" sizes="auto, (max-width: 960px) 100vw, 960px" src="public/assets/cloned/images/390712655a11.png" srcset="public/assets/cloned/images/390712655a11.png 960w, public/assets/cloned/images/b71647841bf4.png 300w, public/assets/cloned/images/bad77d3a6cbc.png 768w" width="960" />
+                </figure>
+                 
+              </div>
+               
+            </div>
+             
+          </div>
+        </div>
+         
+        <div class="cn340" data-cid="n340" id="newsletter">
+          <div class="cn341" data-cid="n341">
+            <h2 class="cn342" data-cid="n342" id="h-subscribe-to-the-driveworks-newsletter">
+              Subscribe to the DriveWorks newsletter
+            </h2>
+             
+            <p class="cn343" data-cid="n343">
+              Get the latest DriveWorks news, tips, and technical updates.
+            </p>
+             
+          </div>
+           
+          <div class="cn344" data-cid="n344">
+            <div class="cn345" data-cid="n345">
+              <div class="cn346" data-cid="n346">
+                <dw-form class="cn347" data-cid="n347">
+                  <div class="cn348" data-cid="n348">
+                    <dw-label class="cn349" data-cid="n349" name="FirstNameCaption">
+                      <div class="cn350" data-cid="n350">
+                        First name
+                      </div>
+                       
+                    </dw-label>
+                    <dw-text-box class="cn351" data-cid="n351" name="FirstName">
+                      <label class="cn352" data-cid="n352">
+                         
+                        <span class="cn353" data-cid="n353">
+                          <span class="cn354" data-cid="n354"></span>
+                        </span>
+                         
+                        <input class="cn355" data-cid="n355" type="text" />
+                         
+                      </label>
+                       
+                    </dw-text-box>
+                    <dw-label class="cn356" data-cid="n356" name="LastNameCaption">
+                      <div class="cn357" data-cid="n357">
+                        Last name
+                      </div>
+                       
+                    </dw-label>
+                    <dw-text-box class="cn358" data-cid="n358" name="LastName">
+                      <label class="cn359" data-cid="n359">
+                         
+                        <span class="cn360" data-cid="n360">
+                          <span class="cn361" data-cid="n361"></span>
+                        </span>
+                         
+                        <input class="cn362" data-cid="n362" type="text" />
+                         
+                      </label>
+                       
+                    </dw-text-box>
+                    <dw-label class="cn363" data-cid="n363" name="EmailCaption">
+                      <div class="cn364" data-cid="n364">
+                        Email
+                      </div>
+                       
+                    </dw-label>
+                    <dw-text-box class="cn365" data-cid="n365" name="Email">
+                      <label class="cn366" data-cid="n366">
+                         
+                        <span class="cn367" data-cid="n367">
+                          <span class="cn368" data-cid="n368"></span>
+                        </span>
+                         
+                        <input class="cn369" data-cid="n369" type="text" />
+                         
+                      </label>
+                       
+                    </dw-text-box>
+                    <dw-label class="cn370" data-cid="n370" name="CompanyCaption">
+                      <div class="cn371" data-cid="n371">
+                        Company
+                      </div>
+                       
+                    </dw-label>
+                    <dw-text-box class="cn372" data-cid="n372" name="Company">
+                      <label class="cn373" data-cid="n373">
+                         
+                        <span class="cn374" data-cid="n374">
+                          <span class="cn375" data-cid="n375"></span>
+                        </span>
+                         
+                        <input class="cn376" data-cid="n376" type="text" />
+                         
+                      </label>
+                       
+                    </dw-text-box>
+                    <dw-label class="cn377" data-cid="n377" name="PrivacyNotice">
+                      <div class="cn378" data-cid="n378">
+                        <span class="cn379" data-cid="n379">
+                          We will subscribe you to our monthly newsletter. You can change your preferences or unsubscribe at any time. Your privacy is important to us, all data will be stored securely and processed in line with our 
+                        </span>
+                        <span class="cn380" data-cid="n380">
+                          terms and conditions
+                        </span>
+                        <span class="cn381" data-cid="n381">
+                           and 
+                        </span>
+                        <span class="cn382" data-cid="n382">
+                          privacy policy
+                        </span>
+                        <span class="cn383" data-cid="n383">
+                          .
+                        </span>
+                      </div>
+                       
+                    </dw-label>
+                    <dw-hyperlink class="cn384" data-cid="n384" name="PrivacyNoticeLink">
+                      <a class="cn385" data-cid="n385" href="https://driveworks.co.uk/terms-and-conditions/" target="_blank">
+                         
+                        <span class="cn386" data-cid="n386"></span>
+                         
+                      </a>
+                       
+                    </dw-hyperlink>
+                    <dw-macro-button class="cn387" data-cid="n387" name="Submit">
+                      <dw-button class="cn388" data-cid="n388">
+                        <button class="cn389" data-cid="n389">
+                           
+                          <div class="cn390" data-cid="n390">
+                            Subscribe
+                          </div>
+                           
+                        </button>
+                         
+                      </dw-button>
+                       
+                    </dw-macro-button>
+                  </div>
+                   
+                </dw-form>
+              </div>
+               
+            </div>
+             
+            <div class="cn391" data-cid="n391"></div>
+             
+            <div class="cn392" data-cid="n392"></div>
+             
+            <div class="cn393" data-cid="n393"></div>
+             
+          </div>
+           
+        </div>
+         
+        <div class="cn394" data-cid="n394">
+          <div class="cn395" data-cid="n395">
+            <figure class="cn396" data-cid="n396">
+              <a class="cn397" data-cid="n397" href="https://driveworks.co.uk/solidworks/">
+                <img class="cn398" data-cid="n398" alt="" height="144" src="public/assets/cloned/images/1a85c52dc49b.png" width="144" />
+              </a>
+            </figure>
+             
+            <figure class="cn399" data-cid="n399">
+              <a class="cn400" data-cid="n400" href="https://driveworks.co.uk/our-story/">
+                <img class="cn401" data-cid="n401" alt="" height="144" src="public/assets/cloned/images/1ce70823899c.png" width="144" />
+              </a>
+            </figure>
+             
+            <figure class="cn402" data-cid="n402">
+              <a class="cn403" data-cid="n403" href="https://driveworks.co.uk/our-story/">
+                <img class="cn404" data-cid="n404" alt="" height="144" src="public/assets/cloned/images/e3e3709beecf.png" width="144" />
+              </a>
+            </figure>
+             
+            <figure class="cn405" data-cid="n405">
+              <a class="cn406" data-cid="n406" href="https://driveworks.co.uk/our-story/">
+                <img class="cn407" data-cid="n407" alt="" height="144" src="public/assets/cloned/images/91ccec38475e.png" width="144" />
+              </a>
+            </figure>
+             
+          </div>
+           
+        </div>
+         
+      </div>
+       
+      <footer class="cn408" data-cid="n408">
+        <div class="cn409" data-cid="n409">
+          <div class="cn410" data-cid="n410">
+            <div class="cn411" data-cid="n411">
+              <div class="cn412" data-cid="n412">
+                <div class="cn413" data-cid="n413">
+                  <a class="cn414" data-cid="n414" href="https://driveworks.co.uk/contact/">
+                    Contact us
+                  </a>
+                   
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+            <div class="cn415" data-cid="n415">
+              <div class="cn416" data-cid="n416">
+                <div class="cn417" data-cid="n417">
+                  <p class="cn418" data-cid="n418">
+                    <a class="cn419" data-cid="n419" href="tel:+441925757585">
+                      UK: +44 1925 757 585
+                    </a>
+                    <br class="cn420" data-cid="n420" />
+                    <a class="cn421" data-cid="n421" href="tel:978-633-3230">
+                      USA: 978-633-3230
+                    </a>
+                  </p>
+                   
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+          </div>
+           
+        </div>
+         
+        <div class="cn422" data-cid="n422">
+          <div class="cn423" data-cid="n423">
+            <div class="cn424" data-cid="n424">
+              <h4 class="cn425" data-cid="n425">
+                Software
+              </h4>
+               
+              <nav class="cn426" data-cid="n426" aria-label="Footer: Software">
+                <ul class="cn427" data-cid="n427">
+                  <li class="cn428" data-cid="n428">
+                    <a class="cn429" data-cid="n429" href="https://www.driveworks.co.uk/products/driveworksxpress/">
+                      <span class="cn430" data-cid="n430">
+                        DriveWorksXpress
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn431" data-cid="n431">
+                    <a class="cn432" data-cid="n432" href="https://www.driveworks.co.uk/products/driveworkssolo/">
+                      <span class="cn433" data-cid="n433">
+                        DriveWorks Solo
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn434" data-cid="n434">
+                    <a class="cn435" data-cid="n435" href="https://www.driveworks.co.uk/products/driveworkspro/">
+                      <span class="cn436" data-cid="n436">
+                        DriveWorks Pro
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn437" data-cid="n437">
+                    <a class="cn438" data-cid="n438" href="https://www.driveworks.co.uk/resellers/">
+                      <span class="cn439" data-cid="n439">
+                        Find a reseller
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+               
+            </div>
+             
+            <div class="cn440" data-cid="n440">
+              <h4 class="cn441" data-cid="n441">
+                Technology
+              </h4>
+               
+              <nav class="cn442" data-cid="n442" aria-label="Footer: Technology">
+                <ul class="cn443" data-cid="n443">
+                  <li class="cn444" data-cid="n444">
+                    <a class="cn445" data-cid="n445" href="https://www.driveworks.co.uk/technology/solidworks-automation/">
+                      <span class="cn446" data-cid="n446">
+                        SOLIDWORKS Automation
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn447" data-cid="n447">
+                    <a class="cn448" data-cid="n448" href="https://www.driveworks.co.uk/technology/rules/">
+                      <span class="cn449" data-cid="n449">
+                        Rules
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn450" data-cid="n450">
+                    <a class="cn451" data-cid="n451" href="https://www.driveworks.co.uk/technology/form-designer/">
+                      <span class="cn452" data-cid="n452">
+                        Form Designer
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn453" data-cid="n453">
+                    <a class="cn454" data-cid="n454" href="https://www.driveworks.co.uk/technology/workflow/">
+                      <span class="cn455" data-cid="n455">
+                        Workflow
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn456" data-cid="n456">
+                    <a class="cn457" data-cid="n457" href="https://www.driveworks.co.uk/technology/integration/">
+                      <span class="cn458" data-cid="n458">
+                        Integration
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn459" data-cid="n459">
+                    <a class="cn460" data-cid="n460" href="https://www.driveworks.co.uk/technology/3d/">
+                      <span class="cn461" data-cid="n461">
+                        3D Visualization
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn462" data-cid="n462">
+                    <a class="cn463" data-cid="n463" href="https://www.driveworks.co.uk/technology/reporting/">
+                      <span class="cn464" data-cid="n464">
+                        Reporting
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+               
+            </div>
+             
+            <div class="cn465" data-cid="n465">
+              <h4 class="cn466" data-cid="n466">
+                Support &amp; Learning
+              </h4>
+               
+              <nav class="cn467" data-cid="n467" aria-label="Footer: Support">
+                <ul class="cn468" data-cid="n468">
+                  <li class="cn469" data-cid="n469">
+                    <a class="cn470" data-cid="n470" href="https://www.driveworks.co.uk/resources/driveworkspro/">
+                      <span class="cn471" data-cid="n471">
+                        DriveWorks Pro
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn472" data-cid="n472">
+                    <a class="cn473" data-cid="n473" href="https://www.driveworks.co.uk/resources/driveworkssolo/">
+                      <span class="cn474" data-cid="n474">
+                        DriveWorks Solo
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn475" data-cid="n475">
+                    <a class="cn476" data-cid="n476" href="https://www.driveworks.co.uk/resources/driveworksxpress/">
+                      <span class="cn477" data-cid="n477">
+                        DriveWorksXpress
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn478" data-cid="n478">
+                    <a class="cn479" data-cid="n479" href="https://www.driveworks.co.uk/support/">
+                      <span class="cn480" data-cid="n480">
+                        Help and support
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+               
+            </div>
+             
+            <div class="cn481" data-cid="n481">
+              <h4 class="cn482" data-cid="n482">
+                Community
+              </h4>
+               
+              <p class="cn483" data-cid="n483">
+                Join the DriveWorks Community to access extra content and share ideas.
+              </p>
+               
+              <div class="cn484" data-cid="n484">
+                <div class="cn485" data-cid="n485">
+                  <a class="cn486" data-cid="n486" href="https://my.driveworks.co.uk/login/">
+                    Log in
+                  </a>
+                </div>
+                 
+                <div class="cn487" data-cid="n487">
+                  <a class="cn488" data-cid="n488" href="https://my.driveworks.co.uk/#create-account">
+                    Register
+                  </a>
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+            <div class="cn489" data-cid="n489">
+              <h4 class="cn490" data-cid="n490">
+                Company
+              </h4>
+               
+              <nav class="cn491" data-cid="n491" aria-label="Footer: Company">
+                <ul class="cn492" data-cid="n492">
+                  <li class="cn493" data-cid="n493">
+                    <a class="cn494" data-cid="n494" href="https://www.driveworks.co.uk/our-story/">
+                      <span class="cn495" data-cid="n495">
+                        Our story
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn496" data-cid="n496">
+                    <a class="cn497" data-cid="n497" href="https://www.driveworks.co.uk/meet-the-team/">
+                      <span class="cn498" data-cid="n498">
+                        Meet the team
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn499" data-cid="n499">
+                    <a class="cn500" data-cid="n500" href="https://www.driveworks.co.uk/careers/">
+                      <span class="cn501" data-cid="n501">
+                        Careers
+                      </span>
+                    </a>
+                  </li>
+                  <li class="cn502" data-cid="n502">
+                    <a class="cn503" data-cid="n503" href="https://www.driveworks.co.uk/contact/">
+                      <span class="cn504" data-cid="n504">
+                        Contact
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+               
+            </div>
+             
+          </div>
+           
+        </div>
+         
+        <div class="cn505" data-cid="n505">
+          <div class="cn506" data-cid="n506">
+            <p class="cn507" data-cid="n507">
+              © DriveWorks Ltd 2026
+            </p>
+             
+            <p class="cn508" data-cid="n508">
+              All Rights Reserved
+            </p>
+             
+          </div>
+           
+          <nav class="cn509" data-cid="n509" aria-label="Copyright Bar">
+            <ul class="cn510" data-cid="n510">
+              <li class="cn511" data-cid="n511">
+                <a class="cn512" data-cid="n512" href="https://www.driveworks.co.uk/privacy-policy/">
+                  <span class="cn513" data-cid="n513">
+                    Privacy Policy
+                  </span>
+                </a>
+              </li>
+              <li class="cn514" data-cid="n514">
+                <a class="cn515" data-cid="n515" href="https://www.driveworks.co.uk/terms-and-conditions/">
+                  <span class="cn516" data-cid="n516">
+                    Terms and Conditions
+                  </span>
+                </a>
+              </li>
+              <li class="cn517" data-cid="n517">
+                <a class="cn518" data-cid="n518" href="https://www.driveworks.co.uk/sitemap/">
+                  <span class="cn519" data-cid="n519">
+                    Sitemap
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+           
+        </div>
+         
+        <div class="cn520" data-cid="n520">
+          <a class="cn521" data-cid="n521" href="https://www.youtube.com/user/DriveWorks" target="_blank" title="DriveWorks on YouTube">
+             
+            <svg class="cn522" data-cid="n522" viewBox="0 0 128 128" fill="currentColor">
+            <path d="M124.367 33.673a15.782 15.782 0 0 0-11.14-11.14C103.401 19.9 64 19.9 64 19.9s-39.401 0-49.227 2.633a15.782 15.782 0 0 0-11.14 11.14C1 43.499 1 64 1 64s0 20.501 2.633 30.327a15.782 15.782 0 0 0 11.14 11.14C24.599 108.1 64 108.1 64 108.1s39.401 0 49.227-2.633a15.782 15.782 0 0 0 11.14-11.14C127 84.501 127 64 127 64s0-20.501-2.633-30.327zM51.4 82.9V45.1l32.734 18.901L51.4 82.9z"></path>
+        </svg>
+             
+          </a>
+           
+          <a class="cn523" data-cid="n523" href="https://www.linkedin.com/company/driveworks" target="_blank" title="DriveWorks on LinkedIn">
+             
+            <svg class="cn524" data-cid="n524" viewBox="0 0 128 128" fill="currentColor">
+            <path d="M111.17 9H16.365C11.718 9 8 12.682 8 16.824v94.352c0 4.603 3.718 7.824 8.365 7.824h95.27c4.647 0 8.365-3.682 8.365-7.824V16.824C119.535 12.682 115.818 9 111.17 9zm-69.71 94.351H24.73V50.422h16.73v52.929zm-8.364-59.833c-5.112 0-9.759-4.142-9.759-9.665s4.183-9.666 9.759-9.666c5.112 0 9.759 4.142 9.759 9.666s-4.183 9.665-9.759 9.665zm70.174 60.293H86.54V78.037c0-5.983 0-13.808-8.83-13.808s-9.759 6.444-9.759 13.348v26.235H51.22v-53.39h16.266v7.364c2.324-4.142 7.436-8.285 15.801-8.285 16.73 0 19.983 11.046 19.983 25.314v28.996z"></path>
+        </svg>
+             
+          </a>
+           
+          <a class="cn525" data-cid="n525" href="https://www.facebook.com/DriveWorks" target="_blank" title="DriveWorks on Facebook">
+             
+            <svg class="cn526" data-cid="n526" viewBox="0 0 128 128" fill="currentColor">
+            <path d="M127 64c0-34.794-28.206-63-63-63S1 29.206 1 64c0 29.546 20.34 54.337 47.781 61.145V83.252H35.789V64H48.78v-8.296c0-21.443 9.704-31.382 30.756-31.382 3.991 0 10.878.783 13.695 1.565v17.452c-1.487-.157-4.069-.235-7.278-.235-10.33 0-14.322 3.913-14.322 14.087V64h20.578l-3.535 19.252H71.632v43.287C102.826 122.771 127 96.21 127 64z"></path>
+        </svg>
+             
+          </a>
+           
+          <a class="cn527" data-cid="n527" href="https://www.x.com/DriveWorks" target="_blank" title="DriveWorks on X">
+             
+            <svg class="cn528" data-cid="n528" viewBox="0 0 128 128" fill="currentColor">
+            <path d="M75.429 56.662 111.617 16H95.048L67.755 46.669 44.169 16H10l40.811 52.5L12.112 112h16.592l29.852-33.554L84.675 112H118L75.429 56.662zM29.314 25.231h9.856l59.234 77.031h-9.176L29.314 25.231z"></path>
+        </svg>
+             
+          </a>
+           
+          <a class="cn529" data-cid="n529" href="https://www.instagram.com/driveworksconfigurator/" target="_blank" title="DriveWorks on Instagram">
+             
+            <svg class="cn530" data-cid="n530" viewBox="0 0 128 128" fill="currentColor">
+            <path d="M64 15.629c15.754 0 17.62.059 23.841.343 5.753.262 8.877 1.223 10.956 2.031 2.755 1.071 4.72 2.348 6.785 4.412 2.064 2.065 3.344 4.03 4.412 6.785.809 2.079 1.769 5.202 2.031 10.956.284 6.222.343 8.087.343 23.841 0 15.754-.059 17.62-.343 23.841-.262 5.753-1.223 8.877-2.031 10.956-1.071 2.755-2.348 4.72-4.412 6.785-2.065 2.064-4.03 3.344-6.785 4.413-2.079.809-5.202 1.769-10.956 2.031-6.222.284-8.087.343-23.841.343-15.754 0-17.62-.059-23.841-.343-5.753-.262-8.877-1.222-10.956-2.031-2.755-1.071-4.72-2.348-6.785-4.413-2.064-2.065-3.344-4.03-4.412-6.785-.809-2.079-1.769-5.202-2.031-10.956-.284-6.222-.343-8.087-.343-23.841 0-15.754.059-17.62.343-23.841.262-5.753 1.222-8.877 2.031-10.956 1.071-2.755 2.348-4.72 4.412-6.785 2.065-2.064 4.03-3.344 6.785-4.412 2.079-.809 5.202-1.769 10.956-2.031 6.221-.281 8.087-.343 23.841-.343zM64 5c-16.023 0-18.033.069-24.326.355-6.281.286-10.568 1.284-14.321 2.743-3.88 1.509-7.17 3.526-10.45 6.806-3.28 3.28-5.299 6.569-6.806 10.45-1.459 3.753-2.457 8.043-2.743 14.321C5.069 45.967 5 47.977 5 64c0 16.024.069 18.034.355 24.326.286 6.281 1.284 10.568 2.743 14.321 1.509 3.881 3.526 7.17 6.806 10.45 3.28 3.28 6.572 5.297 10.45 6.806 3.753 1.459 8.043 2.457 14.321 2.743 6.292.285 8.302.354 24.325.354 16.024 0 18.034-.069 24.326-.355 6.281-.286 10.568-1.284 14.321-2.743 3.881-1.509 7.17-3.526 10.45-6.806 3.28-3.28 5.297-6.571 6.806-10.45 1.459-3.753 2.457-8.042 2.743-14.321.285-6.292.354-8.302.354-24.325s-.069-18.033-.355-24.326c-.286-6.281-1.284-10.568-2.743-14.321-1.509-3.88-3.526-7.17-6.806-10.45-3.28-3.28-6.571-5.297-10.45-6.806-3.753-1.459-8.042-2.457-14.321-2.743C82.033 5.069 80.023 5 64 5zm0 28.703c-16.733 0-30.297 13.564-30.297 30.297S47.267 94.297 64 94.297 94.297 80.733 94.297 64 80.733 33.703 64 33.703zm0 49.965c-10.861 0-19.667-8.804-19.667-19.668 0-10.861 8.806-19.667 19.667-19.667 10.861 0 19.668 8.804 19.668 19.667 0 10.861-8.807 19.668-19.668 19.668zm31.493-58.242c-3.911 0-7.08 3.169-7.08 7.08s3.169 7.08 7.08 7.08c3.912 0 7.08-3.169 7.08-7.08s-3.168-7.08-7.08-7.08z"></path>
+        </svg>
+             
+          </a>
+           
+        </div>
+         
+      </footer>
+    </div>
+     
+    <iframe class="cn531" data-cid="n531" aria-hidden="true" role="presentation" title="Blank"></iframe>
+     
+</body>
+</html>
